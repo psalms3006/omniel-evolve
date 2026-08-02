@@ -10,33 +10,174 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as CompanyRouteImport } from './routes/company'
+import { Route as DevelopersRouteImport } from './routes/developers'
+import { Route as ResearchRouteImport } from './routes/research'
+import { Route as TechnologyRouteImport } from './routes/technology'
+import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
+import { Route as ProductsSlugIndexRouteImport } from './routes/products.$slug.index'
+import { Route as ProductsSlugDemoRouteImport } from './routes/products.$slug.demo'
+import { Route as ProductsSlugFeaturesRouteImport } from './routes/products.$slug.features'
+import { Route as ProductsSlugTechnologyRouteImport } from './routes/products.$slug.technology'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompanyRoute = CompanyRouteImport.update({
+  id: '/company',
+  path: '/company',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevelopersRoute = DevelopersRouteImport.update({
+  id: '/developers',
+  path: '/developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResearchRoute = ResearchRouteImport.update({
+  id: '/research',
+  path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologyRoute = TechnologyRouteImport.update({
+  id: '/technology',
+  path: '/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsSlugRoute = ProductsSlugRouteImport.update({
+  id: '/products/$slug',
+  path: '/products/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsSlugIndexRoute = ProductsSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProductsSlugRoute,
+} as any)
+const ProductsSlugDemoRoute = ProductsSlugDemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => ProductsSlugRoute,
+} as any)
+const ProductsSlugFeaturesRoute = ProductsSlugFeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => ProductsSlugRoute,
+} as any)
+const ProductsSlugTechnologyRoute = ProductsSlugTechnologyRouteImport.update({
+  id: '/technology',
+  path: '/technology',
+  getParentRoute: () => ProductsSlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/company': typeof CompanyRoute
+  '/developers': typeof DevelopersRoute
+  '/research': typeof ResearchRoute
+  '/technology': typeof TechnologyRoute
+  '/products/$slug': typeof ProductsSlugRouteWithChildren
+  '/products/': typeof ProductsIndexRoute
+  '/products/$slug/demo': typeof ProductsSlugDemoRoute
+  '/products/$slug/features': typeof ProductsSlugFeaturesRoute
+  '/products/$slug/technology': typeof ProductsSlugTechnologyRoute
+  '/products/$slug/': typeof ProductsSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/company': typeof CompanyRoute
+  '/developers': typeof DevelopersRoute
+  '/research': typeof ResearchRoute
+  '/technology': typeof TechnologyRoute
+  '/products': typeof ProductsIndexRoute
+  '/products/$slug/demo': typeof ProductsSlugDemoRoute
+  '/products/$slug/features': typeof ProductsSlugFeaturesRoute
+  '/products/$slug/technology': typeof ProductsSlugTechnologyRoute
+  '/products/$slug': typeof ProductsSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/company': typeof CompanyRoute
+  '/developers': typeof DevelopersRoute
+  '/research': typeof ResearchRoute
+  '/technology': typeof TechnologyRoute
+  '/products/$slug': typeof ProductsSlugRouteWithChildren
+  '/products/': typeof ProductsIndexRoute
+  '/products/$slug/demo': typeof ProductsSlugDemoRoute
+  '/products/$slug/features': typeof ProductsSlugFeaturesRoute
+  '/products/$slug/technology': typeof ProductsSlugTechnologyRoute
+  '/products/$slug/': typeof ProductsSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/careers'
+    | '/company'
+    | '/developers'
+    | '/research'
+    | '/technology'
+    | '/products/$slug'
+    | '/products/'
+    | '/products/$slug/demo'
+    | '/products/$slug/features'
+    | '/products/$slug/technology'
+    | '/products/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/careers'
+    | '/company'
+    | '/developers'
+    | '/research'
+    | '/technology'
+    | '/products'
+    | '/products/$slug/demo'
+    | '/products/$slug/features'
+    | '/products/$slug/technology'
+    | '/products/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/careers'
+    | '/company'
+    | '/developers'
+    | '/research'
+    | '/technology'
+    | '/products/$slug'
+    | '/products/'
+    | '/products/$slug/demo'
+    | '/products/$slug/features'
+    | '/products/$slug/technology'
+    | '/products/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareersRoute: typeof CareersRoute
+  CompanyRoute: typeof CompanyRoute
+  DevelopersRoute: typeof DevelopersRoute
+  ResearchRoute: typeof ResearchRoute
+  TechnologyRoute: typeof TechnologyRoute
+  ProductsSlugRoute: typeof ProductsSlugRouteWithChildren
+  ProductsIndexRoute: typeof ProductsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +189,114 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/company': {
+      id: '/company'
+      path: '/company'
+      fullPath: '/company'
+      preLoaderRoute: typeof CompanyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers': {
+      id: '/developers'
+      path: '/developers'
+      fullPath: '/developers'
+      preLoaderRoute: typeof DevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/research': {
+      id: '/research'
+      path: '/research'
+      fullPath: '/research'
+      preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology': {
+      id: '/technology'
+      path: '/technology'
+      fullPath: '/technology'
+      preLoaderRoute: typeof TechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/$slug': {
+      id: '/products/$slug'
+      path: '/products/$slug'
+      fullPath: '/products/$slug'
+      preLoaderRoute: typeof ProductsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/$slug/': {
+      id: '/products/$slug/'
+      path: '/'
+      fullPath: '/products/$slug/'
+      preLoaderRoute: typeof ProductsSlugIndexRouteImport
+      parentRoute: typeof ProductsSlugRoute
+    }
+    '/products/$slug/demo': {
+      id: '/products/$slug/demo'
+      path: '/demo'
+      fullPath: '/products/$slug/demo'
+      preLoaderRoute: typeof ProductsSlugDemoRouteImport
+      parentRoute: typeof ProductsSlugRoute
+    }
+    '/products/$slug/features': {
+      id: '/products/$slug/features'
+      path: '/features'
+      fullPath: '/products/$slug/features'
+      preLoaderRoute: typeof ProductsSlugFeaturesRouteImport
+      parentRoute: typeof ProductsSlugRoute
+    }
+    '/products/$slug/technology': {
+      id: '/products/$slug/technology'
+      path: '/technology'
+      fullPath: '/products/$slug/technology'
+      preLoaderRoute: typeof ProductsSlugTechnologyRouteImport
+      parentRoute: typeof ProductsSlugRoute
+    }
   }
 }
 
+interface ProductsSlugRouteChildren {
+  ProductsSlugDemoRoute: typeof ProductsSlugDemoRoute
+  ProductsSlugFeaturesRoute: typeof ProductsSlugFeaturesRoute
+  ProductsSlugTechnologyRoute: typeof ProductsSlugTechnologyRoute
+  ProductsSlugIndexRoute: typeof ProductsSlugIndexRoute
+}
+
+const ProductsSlugRouteChildren: ProductsSlugRouteChildren = {
+  ProductsSlugDemoRoute: ProductsSlugDemoRoute,
+  ProductsSlugFeaturesRoute: ProductsSlugFeaturesRoute,
+  ProductsSlugTechnologyRoute: ProductsSlugTechnologyRoute,
+  ProductsSlugIndexRoute: ProductsSlugIndexRoute,
+}
+
+const ProductsSlugRouteWithChildren = ProductsSlugRoute._addFileChildren(
+  ProductsSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareersRoute: CareersRoute,
+  CompanyRoute: CompanyRoute,
+  DevelopersRoute: DevelopersRoute,
+  ResearchRoute: ResearchRoute,
+  TechnologyRoute: TechnologyRoute,
+  ProductsSlugRoute: ProductsSlugRouteWithChildren,
+  ProductsIndexRoute: ProductsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
