@@ -13,7 +13,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
-import { SmoothScroll } from "@/components/site/smooth-scroll";
 
 function NotFoundComponent() {
   return (
@@ -80,11 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "OMNIEL — Intelligence infrastructure" },
+      { title: "OMNIEL — Building intelligence without borders" },
       {
         name: "description",
         content:
-          "OMNIEL builds intelligence infrastructure: NOVA, a personal AI operating system, and VYREN, an autonomous agent platform.",
+          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO and KIWI.",
       },
       { name: "author", content: "OMNIEL" },
       { property: "og:site_name", content: "OMNIEL" },
@@ -128,7 +127,6 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SmoothScroll />
       <SiteNav />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <main id="main">

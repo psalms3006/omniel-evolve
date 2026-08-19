@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as TechnologyRouteImport } from './routes/technology'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
@@ -32,6 +35,16 @@ const CareersRoute = CareersRouteImport.update({
   path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
@@ -40,6 +53,11 @@ const ResearchRoute = ResearchRouteImport.update({
 const TechnologyRoute = TechnologyRouteImport.update({
   id: '/technology',
   path: '/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
@@ -57,8 +75,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/research': typeof ResearchRoute
   '/technology': typeof TechnologyRoute
+  '/terms': typeof TermsRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -66,8 +87,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/research': typeof ResearchRoute
   '/technology': typeof TechnologyRoute
+  '/terms': typeof TermsRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products': typeof ProductsIndexRoute
 }
@@ -76,8 +100,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/research': typeof ResearchRoute
   '/technology': typeof TechnologyRoute
+  '/terms': typeof TermsRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -87,8 +114,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/contact'
+    | '/privacy'
     | '/research'
     | '/technology'
+    | '/terms'
     | '/products/$slug'
     | '/products/'
   fileRoutesByTo: FileRoutesByTo
@@ -96,8 +126,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/contact'
+    | '/privacy'
     | '/research'
     | '/technology'
+    | '/terms'
     | '/products/$slug'
     | '/products'
   id:
@@ -105,8 +138,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/contact'
+    | '/privacy'
     | '/research'
     | '/technology'
+    | '/terms'
     | '/products/$slug'
     | '/products/'
   fileRoutesById: FileRoutesById
@@ -115,8 +151,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CareersRoute: typeof CareersRoute
+  ContactRoute: typeof ContactRoute
+  PrivacyRoute: typeof PrivacyRoute
   ResearchRoute: typeof ResearchRoute
   TechnologyRoute: typeof TechnologyRoute
+  TermsRoute: typeof TermsRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
 }
@@ -144,6 +183,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/research': {
       id: '/research'
       path: '/research'
@@ -156,6 +209,13 @@ declare module '@tanstack/react-router' {
       path: '/technology'
       fullPath: '/technology'
       preLoaderRoute: typeof TechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/': {
@@ -179,8 +239,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CareersRoute: CareersRoute,
+  ContactRoute: ContactRoute,
+  PrivacyRoute: PrivacyRoute,
   ResearchRoute: ResearchRoute,
   TechnologyRoute: TechnologyRoute,
+  TermsRoute: TermsRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ProductsIndexRoute: ProductsIndexRoute,
 }
