@@ -1,161 +1,102 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { motion } from "motion/react";
-import { CoreScene } from "@/components/site/core-scene";
 import {
   ActionLink,
-  Panel,
+  Eyebrow,
   PageHero,
+  Panel,
   Reveal,
   Section,
   SectionHeading,
 } from "@/components/site/primitives";
-import { technologyPillars } from "@/lib/omniel";
+import { products, technologyDirections } from "@/lib/omniel";
 
 export const Route = createFileRoute("/technology")({
   head: () => ({
     meta: [
-      { title: "Technology — OMNIEL" },
+      { title: "Technology direction — OMNIEL" },
       {
         name: "description",
         content:
-          "Foundation models, memory, reasoning, voice, vision, agents, robotics, operating system, cloud, and the developer platform behind OMNIEL.",
+          "The engineering directions behind OMNIEL: online and offline intelligence, memory, computer interaction, voice, vision, and tool use.",
       },
-      { property: "og:title", content: "Technology — OMNIEL" },
+      { property: "og:title", content: "OMNIEL technology direction" },
       {
         property: "og:description",
-        content: "The layers beneath NOVA and VYREN, documented and measured.",
+        content: "What OMNIEL is building, at the level of honest engineering direction.",
       },
     ],
   }),
   component: Technology,
 });
 
-const stack = [
-  { name: "Surface", detail: "NOVA · VYREN · Studio" },
-  { name: "Reasoning", detail: "Budgeted deliberation" },
-  { name: "Perception", detail: "Voice · Vision · Spatial" },
-  { name: "Memory", detail: "Episodic · Semantic · Procedural" },
-  { name: "Runtime", detail: "Durable execution · Capability broker" },
-  { name: "Substrate", detail: "Cloud · Silicon" },
-];
-
-function ArchitectureDiagram() {
-  const [active, setActive] = useState(0);
-  return (
-    <Panel className="p-0">
-      <div className="grid lg:grid-cols-[1fr_1fr]">
-        <ul className="divide-y divide-hairline">
-          {stack.map((layer, i) => (
-            <li key={layer.name}>
-              <button
-                type="button"
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                onClick={() => setActive(i)}
-                className={`grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-7 py-6 text-left transition-colors ${
-                  active === i ? "bg-surface-strong" : "hover:bg-surface"
-                }`}
-              >
-                <span className="min-w-0">
-                  <span className="block font-display text-lg">{layer.name}</span>
-                  <span className="mt-1 block text-sm text-muted-foreground">{layer.detail}</span>
-                </span>
-                <span
-                  aria-hidden
-                  className={`h-px w-10 shrink-0 transition-colors ${
-                    active === i ? "bg-accent" : "bg-hairline"
-                  }`}
-                />
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div className="relative min-h-[24rem] border-t border-hairline lg:border-l lg:border-t-0">
-          <CoreScene className="absolute inset-0" hue={200 + active * 12} density={0.6} compact />
-          <div className="absolute inset-x-0 bottom-0 p-7">
-            <motion.p
-              key={active}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="font-mono text-xs tracking-[0.2em] text-muted-foreground"
-            >
-              {stack[active]!.name.toUpperCase()}
-            </motion.p>
-          </div>
-        </div>
-      </div>
-    </Panel>
-  );
-}
-
 function Technology() {
   return (
     <>
       <PageHero
         eyebrow="Technology"
-        title="A stack that explains itself."
-        lede="Eleven layers, one curriculum, one permission model. Below is the whole of it — not a diagram drawn for a keynote."
-      >
-        <ActionLink to="/research">Read the research</ActionLink>
-        <ActionLink to="/developers" variant="ghost">
-          Developer platform
-        </ActionLink>
-      </PageHero>
+        title="Directions, not declarations."
+        lede="OMNIEL is early. This page describes the engineering directions being worked on, and where each one currently stands, rather than claiming a finished platform."
+      />
 
-      <Section>
-        <SectionHeading eyebrow="Architecture" title="Hover a layer to inspect it." />
-        <div className="mt-12">
-          <ArchitectureDiagram />
-        </div>
-      </Section>
-
-      <Section className="border-t border-hairline">
-        <SectionHeading
-          eyebrow="Capabilities"
-          title="Every layer, in plain language."
-          lede="Each of these is a working system with published evaluations, not a roadmap item."
-        />
-        <ul className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {technologyPillars.map((pillar, i) => (
-            <Reveal as="li" key={pillar.id} delay={(i % 3) * 0.06}>
-              <Panel interactive className="h-full">
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent">
-                  {pillar.metric}
+      <Section id="directions">
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {technologyDirections.map((d, i) => (
+            <Reveal as="li" key={d.id} delay={i * 0.04}>
+              <Panel interactive id={d.id} className="h-full scroll-mt-28 p-6">
+                <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-accent">
+                  {d.stage}
                 </p>
-                <h3 className="mt-4 text-xl">{pillar.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{pillar.body}</p>
+                <h2 className="mt-4 text-xl">{d.title}</h2>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.body}</p>
               </Panel>
             </Reveal>
           ))}
         </ul>
       </Section>
 
-      <Section className="border-t border-hairline">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <Section id="offline" className="border-t border-hairline">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr]">
           <SectionHeading
-            eyebrow="Principle"
-            title="Capability is only useful if it is bounded."
-            lede="Permission, budget, and reversal are properties of the runtime rather than promises in documentation. A system that cannot be constrained cannot be trusted with anything that matters."
+            eyebrow="Offline intelligence"
+            title="Useful when the network is not."
+            lede="Offline intelligence is a major direction across the OMNIEL ecosystem, although capabilities vary between products."
           />
-          <Reveal>
-            <Panel>
-              <ul className="space-y-6">
-                {[
-                  ["Declared", "Access and spend are stated before execution begins."],
-                  ["Observed", "Every step emits a trace to storage you control."],
-                  ["Reversible", "Actions carry a defined undo window and an owner."],
-                  ["Evaluated", "Capability thresholds gate every deployment."],
-                ].map(([title, body]) => (
-                  <li key={title} className="grid gap-2 sm:grid-cols-[8rem_1fr] sm:gap-6">
-                    <p className="eyebrow">{title}</p>
-                    <p className="text-sm text-muted-foreground">{body}</p>
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          </Reveal>
+          <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
+            <p>
+              Large parts of the world work with connectivity that is unreliable, expensive or
+              simply unavailable — and many people prefer their work to stay on their own machine
+              regardless of connection quality.
+            </p>
+            <p>
+              OMNIEL treats that as a design constraint rather than an edge case. Where a task can
+              be handled locally, it should be; where it genuinely needs more, the system should say
+              so instead of failing quietly.
+            </p>
+            <p className="text-sm">
+              No OMNIEL product is claimed to be fully offline. Support differs between NOVA, VYREN,
+              ARVO and KIWI, and is still being built.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="per-product" className="border-t border-hairline">
+        <Eyebrow>Where the directions land</Eyebrow>
+        <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+          {products.map((p) => (
+            <li key={p.slug}>
+              <Panel className="h-full p-6">
+                <p className="font-display text-lg tracking-[0.25em]">{p.name}</p>
+                <p className="mt-2 text-sm text-accent">{p.kind}</p>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
+              </Panel>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-12">
+          <ActionLink to="/products" variant="ghost">
+            See the products
+          </ActionLink>
         </div>
       </Section>
     </>

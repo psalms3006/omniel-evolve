@@ -1,7 +1,15 @@
-import { Link, Outlet, createFileRoute, notFound } from "@tanstack/react-router";
-import { CoreScene } from "@/components/site/core-scene";
-import { Eyebrow, Shell } from "@/components/site/primitives";
-import { productBySlug } from "@/lib/omniel";
+import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { NeuralField } from "@/components/site/neural-field";
+import {
+  ActionLink,
+  Eyebrow,
+  Panel,
+  Reveal,
+  Section,
+  SectionHeading,
+  Shell,
+} from "@/components/site/primitives";
+import { productBySlug, products } from "@/lib/omniel";
 
 export const Route = createFileRoute("/products/$slug")({
   loader: ({ params }) => {
@@ -12,73 +20,117 @@ export const Route = createFileRoute("/products/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Product unavailable — OMNIEL" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Product not found — OMNIEL" }, { name: "robots", content: "noindex" }],
       };
     }
     const { product } = loaderData;
+    const title = `${product.name} — ${product.role} | OMNIEL`;
     return {
       meta: [
-        { title: `${product.name} — ${product.role} — OMNIEL` },
+        { title },
         { name: "description", content: product.summary },
-        { property: "og:title", content: `${product.name} — ${product.role}` },
-        { property: "og:description", content: product.statement },
+        { property: "og:title", content: title },
+        { property: "og:description", content: product.summary },
       ],
     };
   },
-  component: ProductLayout,
+  component: ProductPage,
 });
 
-const tabs = [
-  { label: "Overview", to: "/products/$slug" as const, exact: true },
-  { label: "Features", to: "/products/$slug/features" as const, exact: false },
-  { label: "Demo", to: "/products/$slug/demo" as const, exact: false },
-  { label: "Technology", to: "/products/$slug/technology" as const, exact: false },
-];
-
-function ProductLayout() {
+function ProductPage() {
   const { product } = Route.useLoaderData();
+  const others = products.filter((p) => p.slug !== product.slug);
 
   return (
     <>
-      <header className="relative overflow-hidden pb-10 pt-36 md:pt-44">
-        <CoreScene
-          className="pointer-events-none absolute inset-0 -z-10 opacity-80"
-          hue={product.hue}
-          density={0.6}
-        />
+      <header id={product.slug} className="relative overflow-hidden pb-16 pt-36 md:pb-24 md:pt-48">
+        <div className="absolute inset-0 -z-10">
+          <NeuralField hue={product.hue} intensity={0.85} />
+        </div>
         <Shell>
-          <Eyebrow>{product.role}</Eyebrow>
-          <h1 className="mt-6 font-display text-[clamp(2.75rem,9vw,6rem)] leading-none tracking-[0.18em]">
+          <Eyebrow>
+            {product.kind} · {product.status}
+          </Eyebrow>
+          <h1 className="text-balance-tight mt-6 max-w-3xl text-4xl leading-[1.05] sm:text-5xl md:text-7xl">
             {product.name}
           </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            {product.statement}
+          <p className="mt-6 max-w-2xl text-xl text-foreground">{product.statement}</p>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            {product.summary}
           </p>
         </Shell>
       </header>
 
-      <div className="sticky top-[4.5rem] z-30">
-        <Shell>
-          <nav aria-label={`${product.name} sections`} className="glass rounded-full p-1.5">
-            <ul className="flex gap-1 overflow-x-auto">
-              {tabs.map((tab) => (
-                <li key={tab.label}>
-                  <Link
-                    to={tab.to}
-                    params={{ slug: product.slug }}
-                    activeOptions={{ exact: tab.exact }}
-                    className="inline-flex whitespace-nowrap rounded-full px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground data-[status=active]:bg-surface-strong data-[status=active]:text-foreground"
-                  >
-                    {tab.label}
-                  </Link>
+      {product.capabilities.length > 0 ? (
+        <Section id="capabilities" className="border-t border-hairline">
+          <SectionHeading
+            eyebrow="Capabilities"
+            title={`What ${product.name} is being built to do.`}
+            lede="Capabilities are at different stages of maturity. Nothing here should be read as a finished, production-ready guarantee."
+          />
+          <ul className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {product.capabilities.map((c, i) => (
+              <Reveal as="li" key={c.title} delay={i * 0.04}>
+                <Panel interactive className="h-full p-6">
+                  <h2 className="text-lg leading-snug">{c.title}</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
+                </Panel>
+              </Reveal>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
+
+      <Section id="audience" className="border-t border-hairline">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr]">
+          <div>
+            <Eyebrow>Who it is for</Eyebrow>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {product.audience.map((a) => (
+                <li
+                  key={a}
+                  className="rounded-full border border-hairline px-4 py-2 text-sm text-foreground"
+                >
+                  {a}
                 </li>
               ))}
             </ul>
-          </nav>
-        </Shell>
-      </div>
+          </div>
+          <div>
+            <Eyebrow>Status and honest notes</Eyebrow>
+            <ul className="mt-6 space-y-4">
+              {product.notes.map((n) => (
+                <li key={n} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                  <span aria-hidden className="mt-2 h-px w-4 shrink-0 bg-accent/60" />
+                  <span>{n}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mt-12 flex flex-wrap gap-3">
+          <ActionLink to="/contact">Ask about {product.name}</ActionLink>
+          <ActionLink to="/technology" variant="ghost">
+            Technology direction
+          </ActionLink>
+        </div>
+      </Section>
 
-      <Outlet />
+      <Section className="border-t border-hairline">
+        <Eyebrow>Elsewhere in the ecosystem</Eyebrow>
+        <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+          {others.map((p) => (
+            <li key={p.slug}>
+              <Link to="/products/$slug" params={{ slug: p.slug }} className="block h-full">
+                <Panel interactive className="h-full p-6">
+                  <p className="font-display text-lg tracking-[0.25em]">{p.name}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{p.role}</p>
+                </Panel>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
     </>
   );
 }
