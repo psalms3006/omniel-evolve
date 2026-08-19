@@ -275,3 +275,12 @@
     }
   }
 }
+
+/* Very faint technical grid used behind the neural field. */
+@utility grid-overlay {
+  background-image:
+    linear-gradient(to right, oklch(1 0 0 / 3%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(1 0 0 / 3%) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(80% 60% at 50% 40%, black, transparent 78%);
+}

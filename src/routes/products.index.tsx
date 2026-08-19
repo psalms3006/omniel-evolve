@@ -1,28 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CoreScene } from "@/components/site/core-scene";
-import {
-  ActionLink,
-  Panel,
-  Reveal,
-  Section,
-  SectionHeading,
-  PageHero,
-} from "@/components/site/primitives";
-import { ecosystem, products } from "@/lib/omniel";
+import { NeuralField } from "@/components/site/neural-field";
+import { PageHero, Panel, Reveal, Section, SectionHeading } from "@/components/site/primitives";
+import { products } from "@/lib/omniel";
 
 export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
-      { title: "Products — OMNIEL" },
+      { title: "Products — NOVA, VYREN, ARVO and KIWI | OMNIEL" },
       {
         name: "description",
         content:
-          "NOVA, a personal AI operating system, and VYREN, an autonomous agent platform — two products on one OMNIEL architecture.",
+          "The OMNIEL product ecosystem: NOVA the generalist assistant, VYREN for complex technical work, ARVO the voice-first system, and KIWI, an emerging project.",
       },
-      { property: "og:title", content: "Products — OMNIEL" },
+      { property: "og:title", content: "OMNIEL products" },
       {
         property: "og:description",
-        content: "Two products on one architecture: NOVA and VYREN.",
+        content: "Four systems, four different classes of problem, one ecosystem.",
       },
     ],
   }),
@@ -34,76 +27,83 @@ function ProductsIndex() {
     <>
       <PageHero
         eyebrow="Products"
-        title="Two products. One architecture beneath them."
-        lede="Each product in the OMNIEL ecosystem inherits the same memory, reasoning, and permission model. Adding the next one changes nothing about how the others behave."
-      >
-        <ActionLink to="/products/$slug" params={{ slug: "nova" }}>
-          Discover NOVA
-        </ActionLink>
-        <ActionLink to="/products/$slug" params={{ slug: "vyren" }} variant="ghost">
-          Discover VYREN
-        </ActionLink>
-      </PageHero>
+        title="Four systems. Different problems."
+        lede="Each OMNIEL product has its own identity, audience and status. None of them is a ranked version of another."
+      />
 
-      <Section>
-        <div className="grid gap-6 lg:grid-cols-2">
-          {products.map((product, i) => (
-            <Reveal key={product.slug} delay={i * 0.08}>
-              <Panel className="h-full overflow-hidden p-0">
-                <div className="relative h-64">
-                  <CoreScene className="absolute inset-0" hue={product.hue} density={0.5} compact />
-                </div>
-                <div className="p-8 md:p-10">
-                  <p className="font-display text-3xl tracking-[0.3em]">{product.name}</p>
-                  <p className="mt-2 text-sm text-accent">{product.role}</p>
-                  <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-                    {product.statement}
-                  </p>
-                  <dl className="mt-8 grid grid-cols-2 gap-5">
-                    {product.spec.map((s) => (
-                      <div key={s.label}>
-                        <dt className="eyebrow">{s.label}</dt>
-                        <dd className="mt-2 text-sm">{s.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                  <div className="mt-9 flex flex-wrap gap-3">
-                    <ActionLink to="/products/$slug" params={{ slug: product.slug }}>
-                      Overview
-                    </ActionLink>
-                    <ActionLink
-                      to="/products/$slug/demo"
-                      params={{ slug: product.slug }}
-                      variant="ghost"
-                    >
-                      Demo
-                    </ActionLink>
+      <Section id="ecosystem">
+        <ul className="grid gap-4 md:grid-cols-2">
+          {products.map((p, i) => (
+            <Reveal as="li" key={p.slug} delay={i * 0.05}>
+              <Link
+                to="/products/$slug"
+                params={{ slug: p.slug }}
+                id={p.slug}
+                className="block h-full scroll-mt-28"
+              >
+                <Panel interactive className="h-full overflow-hidden p-0">
+                  <div className="relative h-36 border-b border-hairline">
+                    <NeuralField hue={p.hue} intensity={0.7} core={false} />
                   </div>
-                </div>
-              </Panel>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      <Section className="border-t border-hairline">
-        <SectionHeading
-          eyebrow="Ecosystem"
-          title="Room for what comes next."
-          lede="The naming system, the permission model, and the developer surface were designed so that cloud, studio, and robotics could arrive without a rewrite."
-        />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {ecosystem.map((item) => (
-            <li key={item.name}>
-              <Link to={item.to} className="block h-full">
-                <Panel interactive className="h-full p-6">
-                  <p className="font-display text-lg">{item.name}</p>
-                  <p className="mt-2 text-sm text-muted-foreground">{item.role}</p>
+                  <div className="p-7">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <p className="font-display text-2xl tracking-[0.3em]">{p.name}</p>
+                      <span className="rounded-full border border-hairline px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-accent">
+                        {p.kind}
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm text-muted-foreground">{p.role}</p>
+                    <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
+                    <p className="mt-7 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">
+                      {p.status}
+                    </p>
+                  </div>
                 </Panel>
               </Link>
-            </li>
+            </Reveal>
           ))}
         </ul>
+      </Section>
+
+      <Section id="compare" className="border-t border-hairline">
+        <SectionHeading
+          eyebrow="Compare"
+          title="Which one is for what."
+          lede="A plain comparison, without ranking."
+        />
+        <div className="mt-12 overflow-x-auto">
+          <table className="w-full min-w-[46rem] border-collapse text-left text-sm">
+            <caption className="sr-only">Comparison of OMNIEL products</caption>
+            <thead>
+              <tr className="border-b border-hairline text-muted-foreground">
+                <th scope="col" className="py-4 pr-6 font-normal">
+                  Product
+                </th>
+                <th scope="col" className="py-4 pr-6 font-normal">
+                  Position
+                </th>
+                <th scope="col" className="py-4 pr-6 font-normal">
+                  Primary audience
+                </th>
+                <th scope="col" className="py-4 font-normal">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((p) => (
+                <tr key={p.slug} className="border-b border-hairline align-top">
+                  <th scope="row" className="py-5 pr-6 font-display text-lg tracking-[0.2em]">
+                    {p.name}
+                  </th>
+                  <td className="py-5 pr-6 text-muted-foreground">{p.kind}</td>
+                  <td className="py-5 pr-6 text-muted-foreground">{p.audience.join(", ")}</td>
+                  <td className="py-5 text-muted-foreground">{p.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Section>
     </>
   );
