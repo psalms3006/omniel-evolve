@@ -1,41 +1,23 @@
 import { Link } from "@tanstack/react-router";
-import { ecosystem } from "@/lib/omniel";
+import { contactEmail, location, products } from "@/lib/omniel";
 
 const columns = [
   {
-    title: "Products",
-    links: [
-      { label: "NOVA", to: "/products/nova" },
-      { label: "VYREN", to: "/products/vyren" },
-      { label: "All products", to: "/products" },
-      { label: "Technology", to: "/technology" },
-    ],
-  },
-  {
-    title: "Build",
-    links: [
-      { label: "Developers", to: "/developers" },
-      { label: "Documentation", to: "/developers" },
-      { label: "Playground", to: "/developers" },
-      { label: "Status", to: "/developers" },
-    ],
-  },
-  {
-    title: "Research",
-    links: [
-      { label: "Publications", to: "/research" },
-      { label: "Benchmarks", to: "/research" },
-      { label: "Safety", to: "/research" },
-      { label: "Roadmap", to: "/research" },
-    ],
-  },
-  {
     title: "Company",
     links: [
-      { label: "About", to: "/company" },
-      { label: "Careers", to: "/careers" },
-      { label: "News", to: "/news" },
-      { label: "Contact", to: "/contact" },
+      { label: "About", to: "/about" as const },
+      { label: "Technology", to: "/technology" as const },
+      { label: "Research & future", to: "/research" as const },
+      { label: "Careers", to: "/careers" as const },
+    ],
+  },
+  {
+    title: "Connect",
+    links: [
+      { label: "Contact", to: "/contact" as const },
+      { label: "Partnerships", to: "/contact" as const },
+      { label: "Investment interest", to: "/contact" as const },
+      { label: "Privacy", to: "/privacy" as const },
     ],
   },
 ] as const;
@@ -43,32 +25,48 @@ const columns = [
 export function SiteFooter() {
   return (
     <footer className="relative overflow-hidden pt-24">
-      <div aria-hidden className="aurora pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-2/3 opacity-40" />
       <div className="shell">
         <div className="grid gap-12 border-t border-hairline pt-16 lg:grid-cols-[1.2fr_2fr]">
           <div>
             <p className="font-display text-2xl tracking-[0.42em]">OMNIEL</p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Intelligence infrastructure built to last decades. Designed in San Francisco and
-              Zürich.
+              An early-stage AI and technology ecosystem being built from {location}, for a global
+              audience.
             </p>
-            <ul className="mt-8 space-y-2">
-              {ecosystem.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.to}
-                    className="group flex items-baseline gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <span className="font-mono text-[0.7rem] text-accent/70">—</span>
-                    <span>{item.name}</span>
-                    <span className="text-xs opacity-60">{item.role}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <a
+              href={`mailto:${contactEmail}`}
+              className="mt-6 inline-block break-all text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            >
+              {contactEmail}
+            </a>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            <div>
+              <p className="eyebrow mb-4">Products</p>
+              <ul className="space-y-3">
+                {products.map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      to="/products/$slug"
+                      params={{ slug: p.slug }}
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {p.name}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    to="/products"
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    All products
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
             {columns.map((col) => (
               <div key={col.title}>
                 <p className="eyebrow mb-4">{col.title}</p>
@@ -90,26 +88,21 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-hairline py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} OMNIEL. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} OMNIEL. Early-stage, pre-launch. Built in {location}.</p>
           <ul className="flex flex-wrap gap-6">
             <li>
-              <Link to="/company" className="transition-colors hover:text-foreground">
+              <Link to="/privacy" className="transition-colors hover:text-foreground">
                 Privacy
               </Link>
             </li>
             <li>
-              <Link to="/company" className="transition-colors hover:text-foreground">
+              <Link to="/terms" className="transition-colors hover:text-foreground">
                 Terms
               </Link>
             </li>
             <li>
-              <Link to="/research" className="transition-colors hover:text-foreground">
-                Safety
-              </Link>
-            </li>
-            <li>
               <Link to="/contact" className="transition-colors hover:text-foreground">
-                Press
+                Contact
               </Link>
             </li>
           </ul>

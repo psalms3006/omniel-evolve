@@ -3,7 +3,7 @@ import { NeuralField } from "@/components/site/neural-field";
 import { PageHero, Panel, Reveal, Section, SectionHeading } from "@/components/site/primitives";
 import { products } from "@/lib/omniel";
 
-export const Route = createFileRoute("/products")({
+export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
       { title: "Products — NOVA, VYREN, ARVO and KIWI | OMNIEL" },
