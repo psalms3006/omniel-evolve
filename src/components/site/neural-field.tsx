@@ -32,7 +32,7 @@ function nodeBudget(width: number, height: number) {
   const weak = cores <= 4;
   const cap = width < 640 ? (weak ? 30 : 40) : width < 1100 ? (weak ? 50 : 68) : weak ? 64 : 96;
   // density-based so tall sections do not look empty
-  const byArea = Math.round((width * height) / 16000);
+  const byArea = Math.round((width * height) / 9000);
   return Math.max(18, Math.min(cap, byArea));
 }
 
@@ -76,7 +76,7 @@ export function NeuralField({ className, hue = 205, intensity = 1, core = true }
         vy: (Math.random() - 0.5) * 0.16,
         z: 0.35 + Math.random() * 0.65,
       }));
-      linkDist = width < 640 ? 110 : width < 1100 ? 135 : 158;
+      linkDist = width < 640 ? 120 : width < 1100 ? 150 : 172;
     }
 
     function resize() {
