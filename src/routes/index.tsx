@@ -33,9 +33,9 @@ export const Route = createFileRoute("/")({
 
 function Hero() {
   return (
-    <div className="relative min-h-[88svh] w-full overflow-hidden pb-24 pt-36 md:pb-32 md:pt-44">
+    <div className="relative flex min-h-[86svh] w-full items-center overflow-hidden pb-24 pt-36 md:pb-28 md:pt-40">
       <AmbientField />
-      <div className="absolute inset-0 -z-0">
+      <div className="absolute inset-0">
         <NeuralField hue={205} />
       </div>
 
