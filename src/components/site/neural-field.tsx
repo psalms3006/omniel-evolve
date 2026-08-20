@@ -27,12 +27,13 @@ function prefersReducedMotion() {
 }
 
 /** Node budget tuned per device class: desktop rich, laptop moderate, mobile light. */
-function nodeBudget(width: number) {
+function nodeBudget(width: number, height: number) {
   const cores = (typeof navigator !== "undefined" && navigator.hardwareConcurrency) || 4;
   const weak = cores <= 4;
-  if (width < 640) return weak ? 26 : 34;
-  if (width < 1100) return weak ? 44 : 60;
-  return weak ? 60 : 90;
+  const cap = width < 640 ? (weak ? 30 : 40) : width < 1100 ? (weak ? 50 : 68) : weak ? 64 : 96;
+  // density-based so tall sections do not look empty
+  const byArea = Math.round((width * height) / 9000);
+  return Math.max(18, Math.min(cap, byArea));
 }
 
 /**
@@ -67,7 +68,7 @@ export function NeuralField({ className, hue = 205, intensity = 1, core = true }
     const stroke = (a: number) => `hsla(${hue}, 60%, 78%, ${a})`;
 
     function seed() {
-      const count = nodeBudget(width);
+      const count = nodeBudget(width, height);
       nodes = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -75,7 +76,7 @@ export function NeuralField({ className, hue = 205, intensity = 1, core = true }
         vy: (Math.random() - 0.5) * 0.16,
         z: 0.35 + Math.random() * 0.65,
       }));
-      linkDist = width < 640 ? 110 : width < 1100 ? 135 : 158;
+      linkDist = width < 640 ? 120 : width < 1100 ? 150 : 172;
     }
 
     function resize() {
@@ -96,8 +97,8 @@ export function NeuralField({ className, hue = 205, intensity = 1, core = true }
       const cy = height * 0.48;
       const r = Math.min(width, height) * 0.42;
       const g = ctx!.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0, `hsla(${hue}, 70%, 72%, ${0.1 * intensity})`);
-      g.addColorStop(0.45, `hsla(${hue}, 70%, 60%, ${0.035 * intensity})`);
+      g.addColorStop(0, `hsla(${hue}, 70%, 72%, ${0.16 * intensity})`);
+      g.addColorStop(0.45, `hsla(${hue}, 70%, 60%, ${0.06 * intensity})`);
       g.addColorStop(1, "hsla(0, 0%, 0%, 0)");
       ctx!.fillStyle = g;
       ctx!.fillRect(cx - r, cy - r, r * 2, r * 2);
@@ -150,7 +151,7 @@ export function NeuralField({ className, hue = 205, intensity = 1, core = true }
           if (dy > linkDist || dy < -linkDist) continue;
           const d = Math.hypot(dx, dy);
           if (d > linkDist) continue;
-          const a = (1 - d / linkDist) * 0.16 * intensity * ((n.z + m.z) / 2);
+          const a = (1 - d / linkDist) * 0.3 * intensity * ((n.z + m.z) / 2);
           ctx!.strokeStyle = stroke(a);
           ctx!.lineWidth = 1;
           ctx!.beginPath();
@@ -164,7 +165,7 @@ export function NeuralField({ className, hue = 205, intensity = 1, core = true }
         const near =
           pointer.active && Math.hypot(pointer.x - n.x, pointer.y - n.y) < pullRadius ? 1.6 : 1;
         const r = (0.9 + n.z * 1.5) * near;
-        ctx!.fillStyle = stroke(Math.min(0.75, (0.22 + n.z * 0.42) * intensity * near));
+        ctx!.fillStyle = stroke(Math.min(0.75, (0.34 + n.z * 0.46) * intensity * near));
         ctx!.beginPath();
         ctx!.arc(n.x, n.y, r, 0, Math.PI * 2);
         ctx!.fill();
