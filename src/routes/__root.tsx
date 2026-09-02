@@ -90,11 +90,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "OMNIEL" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: siteUrl },
-      { property: "og:image", content: `${siteUrl}/og-image.png` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: `${siteUrl}/og-image.png` },
       { name: "theme-color", content: "#0b0d12" },
     ],
     links: [
