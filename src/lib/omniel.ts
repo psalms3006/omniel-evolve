@@ -286,5 +286,6 @@ export const partnershipAreas = [
   "Other",
 ] as const;
 
-export const contactEmail = "psalmistasagwara@gmail.com";
+export const contactEmail = "hello@omniel.com.ng";
+export const siteUrl = "https://omniel.com.ng";
 export const location = "Nigeria";
