@@ -53,26 +53,26 @@ function Wordmark() {
         }
       }}
     >
-      <span
-        aria-hidden
-        className="font-display shrink-0 text-[0.95rem] font-medium tracking-[0.42em] text-foreground"
-      >
-        O
+      <span aria-hidden className="relative block h-7 shrink-0">
+        <motion.img
+          src={iconAsset.url}
+          alt=""
+          className="block h-7 w-auto"
+          initial={false}
+          animate={{ opacity: expanded ? 0 : 1, scale: expanded ? 0.9 : 1 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          style={{ willChange: "opacity, transform" }}
+        />
+        <motion.span
+          className="absolute inset-y-0 left-0 block overflow-hidden"
+          initial={false}
+          animate={{ maxWidth: expanded ? 170 : 0, opacity: expanded ? 1 : 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          style={{ willChange: "max-width, opacity" }}
+        >
+          <img src={wordmarkAsset.url} alt="" className="block h-7 w-auto max-w-none" />
+        </motion.span>
       </span>
-      <motion.span
-        aria-hidden
-        className="block overflow-hidden whitespace-nowrap font-display text-[0.95rem] font-normal tracking-[0.42em] text-foreground"
-        initial={false}
-        animate={{
-          maxWidth: expanded ? 160 : 0,
-          opacity: expanded ? 1 : 0,
-          x: expanded ? 0 : -8,
-        }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        style={{ willChange: "max-width, opacity, transform" }}
-      >
-        MNIEL
-      </motion.span>
       <span className="sr-only">OMNIEL</span>
     </Link>
   );
