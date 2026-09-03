@@ -55,26 +55,16 @@ function Wordmark() {
         }
       }}
     >
-      <span aria-hidden className="relative block h-7 shrink-0">
-        <motion.img
-          src={iconAsset.url}
-          alt=""
-          className="block h-7 w-auto"
-          initial={false}
-          animate={{ opacity: expanded ? 0 : 1, scale: expanded ? 0.9 : 1 }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          style={{ willChange: "opacity, transform" }}
-        />
-        <motion.span
-          className="absolute inset-y-0 left-0 block overflow-hidden"
-          initial={false}
-          animate={{ maxWidth: expanded ? 170 : 0, opacity: expanded ? 1 : 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          style={{ willChange: "max-width, opacity" }}
-        >
-          <img src={wordmarkAsset.url} alt="" className="block h-7 w-auto max-w-none" />
-        </motion.span>
-      </span>
+      <motion.span
+        aria-hidden
+        className="block h-7 shrink-0 overflow-hidden"
+        initial={false}
+        animate={{ maxWidth: expanded ? 170 : 30 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        style={{ willChange: "max-width" }}
+      >
+        <img src={wordmarkAsset.url} alt="" className="block h-7 w-auto max-w-none" />
+      </motion.span>
       <span className="sr-only">OMNIEL</span>
     </Link>
   );
