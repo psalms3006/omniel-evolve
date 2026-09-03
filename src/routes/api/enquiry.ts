@@ -16,12 +16,16 @@ import { handleEnquiryRequest } from "@/lib/enquiry-handler";
 export const Route = createFileRoute("/api/enquiry")({
   server: {
     handlers: {
-      POST: ({ request }) =>
-        handleEnquiryRequest(request, {
-          resendApiKey: process.env["RESEND_API_KEY"],
-          fromEmail: process.env["RESEND_FROM_EMAIL"],
+      POST: ({ request }) => {
+        const deps: Parameters<typeof handleEnquiryRequest>[1] = {
           toEmail: process.env["OMNIEL_ENQUIRY_EMAIL"] || contactEmail,
-        }),
+        };
+        const resendApiKey = process.env["RESEND_API_KEY"];
+        if (resendApiKey) deps.resendApiKey = resendApiKey;
+        const fromEmail = process.env["RESEND_FROM_EMAIL"];
+        if (fromEmail) deps.fromEmail = fromEmail;
+        return handleEnquiryRequest(request, deps);
+      },
     },
   },
 });

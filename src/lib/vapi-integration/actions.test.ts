@@ -7,7 +7,7 @@ function makeFakeRouter(initialPath = "/") {
   const state = { location: { pathname: initialPath } };
   const navigate = vi.fn(async (opts: { to: string; params?: Record<string, string> }) => {
     if (opts.to === "/products/$slug" && opts.params?.["slug"]) {
-      state.location.pathname = `/products/${opts.params.slug}`;
+      state.location.pathname = `/products/${opts.params["slug"]}`;
     } else {
       state.location.pathname = opts.to;
     }
