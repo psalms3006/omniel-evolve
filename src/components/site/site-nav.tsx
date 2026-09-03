@@ -2,7 +2,6 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { navigation, products } from "@/lib/omniel";
-import iconAsset from "@/assets/omniel-icon.png.asset.json";
 import wordmarkAsset from "@/assets/omniel-wordmark.png.asset.json";
 import { cn } from "@/lib/utils";
 
