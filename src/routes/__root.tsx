@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
+import { VapiWidget } from "@/components/site/vapi-widget";
 import { siteUrl } from "@/lib/omniel";
 
 function NotFoundComponent() {
@@ -142,6 +143,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <SiteFooter />
+      <VapiWidget />
     </QueryClientProvider>
   );
 }
