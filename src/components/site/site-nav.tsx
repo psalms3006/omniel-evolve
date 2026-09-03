@@ -1,21 +1,79 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { navigation, products } from "@/lib/omniel";
 import { cn } from "@/lib/utils";
 
 function Wordmark() {
+  const [expanded, setExpanded] = useState(true);
+  const reduceMotion = useReducedMotion();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearTimer = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+  };
+
+  // Reveal on load, then collapse to just the "O" after a beat — skip the
+  // choreography entirely for prefers-reduced-motion.
+  useEffect(() => {
+    if (reduceMotion) {
+      setExpanded(false);
+      return;
+    }
+    timerRef.current = setTimeout(() => setExpanded(false), 900);
+    return clearTimer;
+  }, [reduceMotion]);
+
+  useEffect(() => clearTimer, []);
+
+  function handleTap() {
+    // Touch devices don't fire hover — first tap reveals, doesn't navigate yet.
+    clearTimer();
+    setExpanded(true);
+    timerRef.current = setTimeout(() => setExpanded(false), 1500);
+  }
+
   return (
-    <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label="OMNIEL home">
+    <Link
+      to="/"
+      aria-label="OMNIEL home"
+      className="group flex shrink-0 items-center"
+      onMouseEnter={() => {
+        clearTimer();
+        setExpanded(true);
+      }}
+      onMouseLeave={() => {
+        clearTimer();
+        setExpanded(false);
+      }}
+      onClick={(e) => {
+        if (!expanded && window.matchMedia("(hover: none)").matches) {
+          e.preventDefault();
+          handleTap();
+        }
+      }}
+    >
       <span
         aria-hidden
-        className="relative grid h-7 w-7 place-items-center rounded-full border border-hairline"
+        className="font-display shrink-0 text-[0.95rem] font-medium tracking-[0.42em] text-foreground"
       >
-        <span className="h-2 w-2 rounded-full bg-accent transition-transform duration-700 group-hover:scale-150" />
+        O
       </span>
-      <span className="font-display text-[0.95rem] font-normal tracking-[0.42em] text-foreground">
-        OMNIEL
-      </span>
+      <motion.span
+        aria-hidden
+        className="block overflow-hidden whitespace-nowrap font-display text-[0.95rem] font-normal tracking-[0.42em] text-foreground"
+        initial={false}
+        animate={{
+          maxWidth: expanded ? 160 : 0,
+          opacity: expanded ? 1 : 0,
+          x: expanded ? 0 : -8,
+        }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        style={{ willChange: "max-width, opacity, transform" }}
+      >
+        MNIEL
+      </motion.span>
+      <span className="sr-only">OMNIEL</span>
     </Link>
   );
 }
