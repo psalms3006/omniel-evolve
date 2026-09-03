@@ -48,7 +48,7 @@ describe("valid submissions", () => {
       const body = await res.json();
       expect(body).toEqual({ ok: true, formId });
       expect(fetchImpl).toHaveBeenCalledTimes(1);
-      expect(fetchImpl.mock.calls[0][0]).toBe("https://api.resend.com/emails");
+      expect(fetchImpl.mock.calls[0]![0]!).toBe("https://api.resend.com/emails");
     },
   );
 });
@@ -95,7 +95,7 @@ describe("validation failures", () => {
 
   it("rejects a missing confirmation field", async () => {
     const payload = validPayload();
-    delete (payload as Record<string, unknown>).confirmation;
+    delete (payload as Record<string, unknown>)["confirmation"];
     const res = await handleEnquiryRequest(req(payload), { ...DEPS, fetchImpl: okFetch() });
     expect(res.status).toBe(400);
   });

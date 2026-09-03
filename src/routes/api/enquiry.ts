@@ -18,9 +18,9 @@ export const Route = createFileRoute("/api/enquiry")({
     handlers: {
       POST: ({ request }) =>
         handleEnquiryRequest(request, {
-          resendApiKey: process.env.RESEND_API_KEY,
-          fromEmail: process.env.RESEND_FROM_EMAIL,
-          toEmail: process.env.OMNIEL_ENQUIRY_EMAIL || contactEmail,
+          resendApiKey: process.env["RESEND_API_KEY"],
+          fromEmail: process.env["RESEND_FROM_EMAIL"],
+          toEmail: process.env["OMNIEL_ENQUIRY_EMAIL"] || contactEmail,
         }),
     },
   },
