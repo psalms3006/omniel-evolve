@@ -17,6 +17,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResearchRouteImport } from './routes/research'
 import { Route as TechnologyRouteImport } from './routes/technology'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as ApiEnquiryRouteImport } from './routes/api/enquiry'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
@@ -60,6 +61,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiEnquiryRoute = ApiEnquiryRouteImport.update({
+  id: '/api/enquiry',
+  path: '/api/enquiry',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/research': typeof ResearchRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
+  '/api/enquiry': typeof ApiEnquiryRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/research': typeof ResearchRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
+  '/api/enquiry': typeof ApiEnquiryRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products': typeof ProductsIndexRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/research': typeof ResearchRoute
   '/technology': typeof TechnologyRoute
   '/terms': typeof TermsRoute
+  '/api/enquiry': typeof ApiEnquiryRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/research'
     | '/technology'
     | '/terms'
+    | '/api/enquiry'
     | '/products/$slug'
     | '/products/'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/research'
     | '/technology'
     | '/terms'
+    | '/api/enquiry'
     | '/products/$slug'
     | '/products'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/research'
     | '/technology'
     | '/terms'
+    | '/api/enquiry'
     | '/products/$slug'
     | '/products/'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   ResearchRoute: typeof ResearchRoute
   TechnologyRoute: typeof TechnologyRoute
   TermsRoute: typeof TermsRoute
+  ApiEnquiryRoute: typeof ApiEnquiryRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
 }
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/enquiry': {
+      id: '/api/enquiry'
+      path: '/api/enquiry'
+      fullPath: '/api/enquiry'
+      preLoaderRoute: typeof ApiEnquiryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/': {
       id: '/products/'
       path: '/products'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResearchRoute: ResearchRoute,
   TechnologyRoute: TechnologyRoute,
   TermsRoute: TermsRoute,
+  ApiEnquiryRoute: ApiEnquiryRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ProductsIndexRoute: ProductsIndexRoute,
 }
