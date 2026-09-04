@@ -248,17 +248,33 @@ export const technologyDirections = [
 ];
 
 export const futureDirections = [
-  { title: "Frontier AI", body: "Building toward frontier-level systems rather than thin wrappers." },
-  { title: "AI research", body: "Exploring a research practice that can eventually publish its own work." },
-  { title: "Robotics", body: "A long-term interest in intelligence with a body, likely through partnership." },
+  {
+    title: "Frontier AI",
+    body: "Building toward frontier-level systems rather than thin wrappers.",
+  },
+  {
+    title: "AI research",
+    body: "Exploring a research practice that can eventually publish its own work.",
+  },
+  {
+    title: "Robotics",
+    body: "A long-term interest in intelligence with a body, likely through partnership.",
+  },
   { title: "Games", body: "An area OMNIEL intends to explore as the ecosystem matures." },
-  { title: "Enterprise technology", body: "Systems organisations can adopt, once the foundations are proven." },
+  {
+    title: "Enterprise technology",
+    body: "Systems organisations can adopt, once the foundations are proven.",
+  },
   { title: "Consumer technology", body: "Products for everyday people, not only technical users." },
   { title: "Intelligent agents", body: "Agents that carry out real work under clear permission." },
-  { title: "AI infrastructure", body: "The substrate underneath all of the above, built deliberately." },
+  {
+    title: "AI infrastructure",
+    body: "The substrate underneath all of the above, built deliberately.",
+  },
 ];
 
 export const team = {
+  founder: "Samuel Asagwara",
   founderNote:
     "OMNIEL currently has a sole founder, who is building the ecosystem and working toward expanding the team.",
   collaborators: ["Wisdom", "Jerry", "Chika"],
