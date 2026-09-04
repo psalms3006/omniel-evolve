@@ -16,6 +16,29 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { VapiWidget } from "@/components/site/vapi-widget";
 import { siteUrl } from "@/lib/omniel";
 
+/**
+ * Organization structured data. Every field here is either a fact stated
+ * elsewhere on the site (name, url, description, founder) or omitted — no
+ * invented sameAs/social links, address, founding date, or anything not
+ * already public. This is the authoritative signal search engines (and
+ * generative answers pulling from search) should prefer over guessing from
+ * scattered, unrelated indexed pages.
+ */
+const ORGANIZATION_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "OMNIEL",
+  url: siteUrl,
+  logo: `${siteUrl}/icon-512.png`,
+  email: "hello@omniel.com.ng",
+  description:
+    "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO and KIWI.",
+  founder: {
+    "@type": "Person",
+    name: "Samuel Asagwara",
+  },
+};
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -91,9 +114,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "OMNIEL" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: siteUrl },
+      { property: "og:image", content: `${siteUrl}/og-image.png` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: `${siteUrl}/og-image.png` },
       { name: "theme-color", content: "#0b0d12" },
     ],
     links: [
@@ -123,6 +148,11 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          // Static, developer-authored JSON only — never user input.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}
+        />
       </head>
       <body>
         {children}
