@@ -2,8 +2,8 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { navigation, products } from "@/lib/omniel";
-import iconAsset from "@/assets/omniel-icon.png.asset.json";
-import wordmarkAsset from "@/assets/omniel-wordmark.png.asset.json";
+import omnielMark from "@/assets/omniel-mark.png";
+import omnielWordmark from "@/assets/omniel-wordmark.png";
 import { cn } from "@/lib/utils";
 
 function Wordmark() {
@@ -57,7 +57,7 @@ function Wordmark() {
     >
       {/* Fixed-size slot: the icon always renders here so the nav links
           never shift. The full wordmark sweeps out over the bar on hover. */}
-      <img src={iconAsset.url} alt="" className="block h-7 w-auto shrink-0" />
+      <img src={omnielMark} alt="" className="block h-7 w-auto shrink-0" />
       <motion.span
         aria-hidden
         className="pointer-events-none absolute left-0 top-1/2 z-10 block h-7 -translate-y-1/2 overflow-hidden"
@@ -66,7 +66,7 @@ function Wordmark() {
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         style={{ willChange: "width" }}
       >
-        <img src={wordmarkAsset.url} alt="" className="block h-7 w-auto max-w-none" />
+        <img src={omnielWordmark} alt="" className="block h-7 w-auto max-w-none" />
       </motion.span>
       <span className="sr-only">OMNIEL</span>
     </Link>
