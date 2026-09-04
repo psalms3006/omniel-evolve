@@ -103,15 +103,19 @@ function About() {
       </Section>
 
       <Section id="team" className="border-t border-hairline">
-        <SectionHeading eyebrow="Built by" title="Small team. Large ambition." lede={team.founderNote} />
+        <SectionHeading
+          eyebrow="Built by"
+          title="Small team. Large ambition."
+          lede={team.founderNote}
+        />
         <div className="mt-12 grid gap-4 md:grid-cols-[1fr_1.2fr]">
           <Panel className="p-7">
             <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-accent">
               Founder
             </p>
             <p className="mt-4 text-lg leading-relaxed">
-              OMNIEL currently has a sole founder, building the ecosystem and working toward
-              expanding the team.
+              OMNIEL currently has a sole founder, {team.founder}, building the ecosystem and
+              working toward expanding the team.
             </p>
           </Panel>
           <Panel className="p-7">
