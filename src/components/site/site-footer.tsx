@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { contactEmail, location, products } from "@/lib/omniel";
-import wordmarkAsset from "@/assets/omniel-wordmark.png.asset.json";
+import omnielWordmark from "@/assets/omniel-wordmark.png";
 
 const columns = [
   {
@@ -29,7 +29,7 @@ export function SiteFooter() {
       <div className="shell">
         <div className="grid gap-12 border-t border-hairline pt-16 lg:grid-cols-[1.2fr_2fr]">
           <div>
-            <img src={wordmarkAsset.url} alt="OMNIEL" className="h-8 w-auto" />
+            <img src={omnielWordmark} alt="OMNIEL" className="h-8 w-auto" />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
               An early-stage AI and technology ecosystem being built from {location}, for a global
               audience.
