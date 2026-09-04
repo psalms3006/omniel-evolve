@@ -39,7 +39,7 @@ function Wordmark() {
     <Link
       to="/"
       aria-label="OMNIEL home"
-      className="group flex shrink-0 items-center"
+      className="group relative flex shrink-0 items-center"
       onMouseEnter={() => {
         clearTimer();
         setExpanded(true);
