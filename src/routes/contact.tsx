@@ -62,7 +62,7 @@ function Contact() {
           <InquiryForm
             id="partnerships"
             title="Partnership interest"
-            description="Technology, research, robotics, business, infrastructure or something else. A hosted submission system will be connected later."
+            description="Technology, research, robotics, business, infrastructure or something else."
             categories={partnershipAreas}
             categoryLabel="Partnership area"
             submitLabel="Send partnership interest"
@@ -71,7 +71,7 @@ function Contact() {
           <InquiryForm
             id="investment"
             title="Express interest in supporting OMNIEL"
-            description="Interested in supporting what we're building? OMNIEL is not making any public fundraising claims — this simply opens a conversation."
+            description="There's no public fundraising round right now — this just opens a conversation."
             submitLabel="Express interest"
           />
         </div>
