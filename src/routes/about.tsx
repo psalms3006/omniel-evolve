@@ -57,10 +57,9 @@ function About() {
               “{positioning.belief}”
             </blockquote>
             <p className="mt-7 text-base leading-relaxed text-muted-foreground">
-              OMNIEL is not a political organisation and this is not a statement against anyone. It
-              is a simple position: Africa should not only supply the resources behind the global
-              economy while the technology shaping the future is built and controlled elsewhere.
-              Africa should help build it.
+              This isn't a statement against anyone — it's a simple position: Africa should not only
+              supply the resources behind the global economy while the technology shaping the future
+              is built and controlled elsewhere. Africa should help build it.
             </p>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground">
               OMNIEL is based in {location}. It has not yet been formally registered, and it is not
@@ -87,8 +86,8 @@ function About() {
       <Section id="vision" className="border-t border-hairline">
         <SectionHeading
           eyebrow="Vision"
-          title="Technology should meet people where they are."
-          lede="Wealth, network quality, geography, computing resources, technical background and infrastructure should not decide who benefits from intelligent software."
+          title="Access shouldn't be the deciding factor."
+          lede="These are the working principles behind that — not slogans, just the constraints OMNIEL designs against."
         />
         <ul className="mt-14 grid gap-3 sm:grid-cols-2">
           {principles.map((p, i) => (
@@ -105,7 +104,7 @@ function About() {
       <Section id="team" className="border-t border-hairline">
         <SectionHeading
           eyebrow="Built by"
-          title="Small team. Large ambition."
+          title="One person, building in public."
           lede={team.founderNote}
         />
         <div className="mt-12 grid gap-4 md:grid-cols-[1fr_1.2fr]">
