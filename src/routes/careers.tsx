@@ -42,7 +42,7 @@ function Careers() {
     <>
       <PageHero
         eyebrow="Careers"
-        title="Small team. Large ambition."
+        title="Come in early."
         lede="OMNIEL is still building its team. If you want to help build a frontier AI ecosystem from Nigeria, tell us where you fit — even if no formal role is listed."
       />
 
