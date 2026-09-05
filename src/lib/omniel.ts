@@ -60,8 +60,8 @@ export const products: Product[] = [
         body: "Persistent context, planning and background tasks so long work does not restart from zero.",
       },
       {
-        title: "Self-editing",
-        body: "An architecture that can adjust its own routines as workflows change.",
+        title: "Adaptive workflows",
+        body: "Controlled workflow adaptation — routines adjust within defined bounds as tasks change, rather than open-ended self-modification.",
       },
       {
         title: "Offline intelligence",
@@ -81,7 +81,7 @@ export const products: Product[] = [
     role: "Specialist AI for complex technical work",
     statement: "Built for complexity.",
     summary:
-      "VYREN is OMNIEL's specialist system for developers, engineers and technical users working on hard problems — coding, deep technical reasoning and complex research.",
+      "VYREN is OMNIEL's specialist system for developers, engineers and technical users working on hard problems — coding, deep technical reasoning, complex research and voice-first technical conversation.",
     hue: 78,
     status: "In development",
     audience: ["Developers", "Engineers", "Technical users", "People facing complex problems"],
@@ -97,6 +97,10 @@ export const products: Product[] = [
       {
         title: "Web research and search",
         body: "Gathering, comparing and reconciling technical sources as part of a task.",
+      },
+      {
+        title: "Voice for technical work",
+        body: "Continuous, voice-first conversation built for technical back-and-forth — distinct from ARVO's general-purpose voice-first direction.",
       },
       {
         title: "Difficult workflows",
