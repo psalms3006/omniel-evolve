@@ -114,8 +114,8 @@ function About() {
               Founder
             </p>
             <p className="mt-4 text-lg leading-relaxed">
-              OMNIEL currently has a sole founder, {team.founder}, building the ecosystem and
-              working toward expanding the team.
+              OMNIEL currently has a sole founder — {team.founder}, Founder &amp; CEO — building the
+              ecosystem and working toward expanding the team.
             </p>
           </Panel>
           <Panel className="p-7">
