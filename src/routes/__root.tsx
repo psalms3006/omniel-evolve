@@ -36,6 +36,7 @@ const ORGANIZATION_SCHEMA = {
   founder: {
     "@type": "Person",
     name: "Samuel Asagwara",
+    jobTitle: "Founder & CEO",
   },
 };
 
