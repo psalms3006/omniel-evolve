@@ -123,8 +123,8 @@ function BeliefSection() {
           </blockquote>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground">
             Africa supplies a great deal of what the global economy runs on. OMNIEL is being built
-            from Nigeria on the belief that it can also build the technology shaping what comes
-            next — seriously, and to a global standard.
+            from Nigeria on the belief that it can also build the technology shaping what comes next
+            — seriously, and to a global standard.
           </p>
           <div className="mt-10">
             <ActionLink to="/about" variant="ghost">
