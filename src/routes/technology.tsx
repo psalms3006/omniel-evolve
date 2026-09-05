@@ -59,7 +59,7 @@ function Technology() {
           <SectionHeading
             eyebrow="Offline intelligence"
             title="Useful when the network is not."
-            lede="Offline intelligence is a major direction across the OMNIEL ecosystem, although capabilities vary between products."
+            lede="One of the harder engineering directions in the ecosystem, and one of the most worth getting right."
           />
           <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
             <p>
