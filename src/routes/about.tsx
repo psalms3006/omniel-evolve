@@ -29,7 +29,7 @@ const stages = [
   },
   {
     label: "In development",
-    body: "NOVA, VYREN and ARVO are actively being built. KIWI is an emerging project whose public specification is still being established.",
+    body: "NOVA, VYREN and ARVO are actively being built. KIWI is an emerging project whose public specification is still being established. ORIN is private, with most detail intentionally not public.",
   },
   {
     label: "Planned",

@@ -32,7 +32,7 @@ const ORGANIZATION_SCHEMA = {
   logo: `${siteUrl}/icon-512.png`,
   email: "hello@omniel.com.ng",
   description:
-    "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO and KIWI.",
+    "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO, KIWI and ORIN.",
   founder: {
     "@type": "Person",
     name: "Samuel Asagwara",
@@ -107,7 +107,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO and KIWI.",
+          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO, KIWI and ORIN.",
       },
       { name: "author", content: "OMNIEL" },
       { property: "og:site_name", content: "OMNIEL" },

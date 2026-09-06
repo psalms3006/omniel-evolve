@@ -76,6 +76,7 @@ function Wordmark() {
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => setOpen(false), [pathname]);
@@ -118,18 +119,36 @@ export function SiteNav() {
           >
             <div className="flex min-w-0 items-center gap-8">
               <Wordmark />
-              <ul className="hidden items-center gap-1 lg:flex">
+              <motion.ul
+                initial={reduceMotion ? false : "hidden"}
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { delayChildren: 0.18, staggerChildren: 0.07 },
+                  },
+                }}
+                className="hidden items-center gap-1 md:flex"
+              >
                 {navigation.map((item) => (
-                  <li key={item.to}>
+                  <motion.li
+                    key={item.to}
+                    variants={{
+                      hidden: { opacity: 0, x: -14 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  >
                     <Link
                       to={item.to}
                       className="relative rounded-full px-3 py-2 text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground data-[status=active]:text-foreground"
                     >
                       {item.label}
                     </Link>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <Link
@@ -143,7 +162,7 @@ export function SiteNav() {
                 onClick={() => setOpen((v) => !v)}
                 aria-expanded={open}
                 aria-label={open ? "Close menu" : "Open menu"}
-                className="grid h-11 w-11 place-items-center rounded-full border border-hairline text-foreground transition-colors hover:bg-surface-strong lg:hidden"
+                className="grid h-11 w-11 place-items-center rounded-full border border-hairline text-foreground transition-colors hover:bg-surface-strong md:hidden"
               >
                 <span className="relative block h-3 w-4">
                   <span

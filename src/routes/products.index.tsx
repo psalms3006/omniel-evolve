@@ -6,16 +6,16 @@ import { products } from "@/lib/omniel";
 export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
-      { title: "Products — NOVA, VYREN, ARVO and KIWI | OMNIEL" },
+      { title: "Products — NOVA, VYREN, ARVO, KIWI and ORIN | OMNIEL" },
       {
         name: "description",
         content:
-          "The OMNIEL product ecosystem: NOVA the generalist assistant, VYREN for complex technical work, ARVO the voice-first system, and KIWI, an emerging project.",
+          "The OMNIEL product ecosystem: NOVA the generalist assistant, VYREN for complex technical work, ARVO the voice-first system, KIWI, an emerging project, and ORIN, a private autonomous-execution system.",
       },
       { property: "og:title", content: "OMNIEL products" },
       {
         property: "og:description",
-        content: "Four systems, four different classes of problem, one ecosystem.",
+        content: "Five systems, five different classes of problem, one ecosystem.",
       },
     ],
   }),
@@ -27,7 +27,7 @@ function ProductsIndex() {
     <>
       <PageHero
         eyebrow="Products"
-        title="Four systems. Different problems."
+        title="Five systems. Different problems."
         lede="Each OMNIEL product has its own identity, audience and status. None of them is a ranked version of another."
       />
 
@@ -53,7 +53,9 @@ function ProductsIndex() {
                       </span>
                     </div>
                     <p className="mt-3 text-sm text-muted-foreground">{p.role}</p>
-                    <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{p.summary}</p>
+                    <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+                      {p.summary}
+                    </p>
                     <p className="mt-7 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">
                       {p.status}
                     </p>

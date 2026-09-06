@@ -40,9 +40,9 @@ function Privacy() {
       <Section id="scope">
         <SectionHeading eyebrow="01" title="Who this applies to" />
         <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
-          This notice covers omniel.com.ng — the public website. It does not cover NOVA, VYREN, ARVO
-          or KIWI themselves, which are separate, unlaunched systems with their own data practices
-          to be described when they're publicly available.
+          This notice covers omniel.com.ng — the public website. It does not cover NOVA, VYREN,
+          ARVO, KIWI or ORIN themselves, which are separate, unlaunched systems with their own data
+          practices to be described when they're publicly available.
         </p>
       </Section>
 

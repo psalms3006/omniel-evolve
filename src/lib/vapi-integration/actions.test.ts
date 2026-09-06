@@ -120,11 +120,11 @@ describe("open_product", () => {
     const router = makeFakeRouter("/products");
     const dispatcher = createActionDispatcher(router);
 
-    const result = await dispatcher.open_product({ slug: "orin" });
+    const result = await dispatcher.open_product({ slug: "frontier" });
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
-      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi"]);
+      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi", "orin"]);
     }
   });
 });
@@ -157,13 +157,13 @@ describe("navigate_to_product_section", () => {
     const dispatcher = createActionDispatcher(router);
 
     const result = await dispatcher.navigate_to_product_section({
-      slug: "orin",
+      slug: "frontier",
       section: "capabilities",
     });
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
-      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi"]);
+      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi", "orin"]);
     }
   });
 
