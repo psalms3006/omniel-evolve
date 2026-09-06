@@ -94,7 +94,7 @@ export const TOOL_REGISTRY: readonly ToolDefinition[] = [
   },
   {
     name: "open_product",
-    description: "Open a specific OMNIEL product's page (NOVA, VYREN, ARVO, or KIWI).",
+    description: "Open a specific OMNIEL product's page (NOVA, VYREN, ARVO, KIWI, or ORIN).",
     executionLocation: "client",
     requiresUserConfirmation: false,
     parameters: {
@@ -103,7 +103,7 @@ export const TOOL_REGISTRY: readonly ToolDefinition[] = [
         slug: {
           type: "string",
           description: "The product to open.",
-          enum: ["nova", "vyren", "arvo", "kiwi"],
+          enum: ["nova", "vyren", "arvo", "kiwi", "orin"],
         },
       },
       required: ["slug"],
@@ -121,7 +121,7 @@ export const TOOL_REGISTRY: readonly ToolDefinition[] = [
         slug: {
           type: "string",
           description: "The product whose page to open.",
-          enum: ["nova", "vyren", "arvo", "kiwi"],
+          enum: ["nova", "vyren", "arvo", "kiwi", "orin"],
         },
         section: {
           type: "string",

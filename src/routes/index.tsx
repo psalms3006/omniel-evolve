@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO and KIWI.",
+          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO, KIWI and ORIN.",
       },
       { property: "og:title", content: "OMNIEL — Building intelligence without borders" },
       {
@@ -68,8 +68,8 @@ function EcosystemSection() {
     <Section id="products" className="border-t border-hairline">
       <SectionHeading
         eyebrow="The ecosystem"
-        title="One ecosystem. Four distinct systems."
-        lede="OMNIEL is an umbrella for products that solve different classes of problems. They are not four versions of the same assistant, and none of them is ranked above the others."
+        title="One ecosystem. Five distinct systems."
+        lede="OMNIEL is an umbrella for products that solve different classes of problems. They are not five versions of the same assistant, and none of them is ranked above the others."
       />
 
       <div className="mt-14 grid gap-4 md:grid-cols-2">

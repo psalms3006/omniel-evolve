@@ -55,7 +55,7 @@ function Contact() {
           <InquiryForm
             id="contact"
             title="General enquiry"
-            description="Questions about NOVA, VYREN, ARVO, KIWI, or OMNIEL itself."
+            description="Questions about NOVA, VYREN, ARVO, KIWI, ORIN, or OMNIEL itself."
             submitLabel="Send message"
           />
 

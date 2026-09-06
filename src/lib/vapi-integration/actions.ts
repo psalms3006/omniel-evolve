@@ -41,7 +41,7 @@ const PRODUCT_SECTIONS = ["capabilities", "audience"] as const;
 export type ProductSectionId = (typeof PRODUCT_SECTIONS)[number];
 
 /** Matches products in src/lib/omniel.ts — verified against the repository, not invented. */
-const PRODUCT_SLUGS = ["nova", "vyren", "arvo", "kiwi"] as const;
+const PRODUCT_SLUGS = ["nova", "vyren", "arvo", "kiwi", "orin"] as const;
 export type ProductSlug = (typeof PRODUCT_SLUGS)[number];
 
 /** Matches the four InquiryForm ids actually rendered in contact.tsx / careers.tsx. */

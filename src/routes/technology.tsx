@@ -74,7 +74,7 @@ function Technology() {
             </p>
             <p className="text-sm">
               No OMNIEL product is claimed to be fully offline. Support differs between NOVA, VYREN,
-              ARVO and KIWI, and is still being built.
+              ARVO, KIWI and ORIN, and is still being built.
             </p>
           </div>
         </div>
