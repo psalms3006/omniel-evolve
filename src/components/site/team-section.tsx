@@ -22,7 +22,7 @@ function PersonMark({ member, size = "md" }: { member: TeamMember; size?: "md" |
         <img src={member.photo} alt="" className="h-full w-full object-cover" />
       ) : (
         <>
-          <Meridian intensity={0.4} />
+          <Meridian intensity={0.45} lit={false} />
           <span
             aria-hidden
             className="absolute inset-0 flex items-center justify-center font-display text-sm tracking-[0.2em] text-foreground/80"

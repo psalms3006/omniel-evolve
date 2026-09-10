@@ -42,7 +42,7 @@ function ProductsIndex() {
           <Panel interactive className="overflow-hidden p-0">
             <div className="grid gap-0 lg:grid-cols-[1fr_1.2fr]">
               <div className="relative h-48 border-b border-hairline lg:h-full lg:border-b-0 lg:border-r">
-                <Meridian accent intensity={0.8} />
+                <Meridian accent intensity={0.75} />
                 {nova.icon && (
                   <img
                     src={nova.icon}
@@ -81,7 +81,7 @@ function ProductsIndex() {
               >
                 <Panel interactive className="h-full overflow-hidden p-0">
                   <div className="relative h-28 border-b border-hairline">
-                    <Meridian intensity={0.45} />
+                    <Meridian intensity={0.5} lit={false} />
                   </div>
                   <div className="p-6">
                     <div className="flex flex-wrap items-center gap-3">

@@ -88,7 +88,7 @@ function Hero() {
       {/* One background treatment, not three. This previously stacked
           AmbientField, NeuralField and the aurora gradient behind the single
           paragraph that has to explain the company. */}
-      <Meridian accent animate align="right" intensity={0.55} />
+      <Meridian accent animate align="rising" intensity={0.9} />
 
       <Shell>
         <div className="relative grid items-center gap-12 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,0.55fr)]">
@@ -135,7 +135,7 @@ function NovaSpotlightSection() {
       <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
         <div className="relative overflow-hidden rounded-[2rem] border border-hairline">
           <div className="h-64 md:h-full md:min-h-[22rem]">
-            <Meridian accent intensity={0.9} />
+            <Meridian accent intensity={0.75} />
           </div>
           {nova.icon && (
             <img
@@ -189,7 +189,7 @@ function EcosystemSection() {
             >
               <Panel interactive className="relative h-full overflow-hidden p-0">
                 <div className="relative h-24 overflow-hidden border-b border-hairline">
-                  <Meridian intensity={0.45} />
+                  <Meridian intensity={0.5} lit={false} />
                 </div>
                 <div className="p-6">
                   <p className="font-display text-lg tracking-[0.25em]">{product.name}</p>

@@ -47,7 +47,7 @@ function NotFoundComponent() {
       {/* The same meridian as the hero, turned up and centred: the 404 is not
           an apology page bolted on, it is the site's own visual language at a
           different scale. */}
-      <Meridian accent animate intensity={0.8} />
+      <Meridian accent animate intensity={0.9} />
 
       <div className="shell relative">
         <div className="max-w-2xl">
