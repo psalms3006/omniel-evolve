@@ -9,23 +9,17 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 import { products, technologyDirections } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/technology")({
-  head: () => ({
-    meta: [
-      { title: "Technology direction | OMNIEL" },
-      {
-        name: "description",
-        content:
-          "The engineering directions behind OMNIEL: online and offline intelligence, memory, computer interaction, voice, vision, and tool use.",
-      },
-      { property: "og:title", content: "OMNIEL technology direction" },
-      {
-        property: "og:description",
-        content: "What OMNIEL is building, at the level of honest engineering direction.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/technology",
+    title: "Technology direction | OMNIEL",
+    description: "The engineering directions behind OMNIEL: online and offline intelligence, memory, computer interaction, voice, vision, and tool use.",
+    ogTitle: "OMNIEL technology direction",
+    ogDescription: "What OMNIEL is building, at the level of honest engineering direction.",
+    }),
   component: Technology,
 });
 
@@ -74,7 +68,7 @@ function Technology() {
             </p>
             <p className="text-sm">
               No OMNIEL product is claimed to be fully offline. Support differs between NOVA, VYREN,
-              ARVO, KIWI and ORIN, and is still being built.
+              ARVO and KIWI, and is still being built.
             </p>
           </div>
         </div>

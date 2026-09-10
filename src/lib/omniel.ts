@@ -7,9 +7,9 @@
  * - Ambitions must always read as ambitions, never as current capability.
  */
 
-export type ProductSlug = "nova" | "vyren" | "arvo" | "kiwi" | "orin";
+export type ProductSlug = "nova" | "vyren" | "arvo" | "kiwi";
 
-export type ProductStatus = "In development" | "Emerging project" | "Private";
+export type ProductStatus = "In development" | "Emerging project";
 
 export type ProductPriority = "flagship" | "roadmap";
 
@@ -30,6 +30,14 @@ export type Product = {
   notes: string[];
 };
 
+// ORIN is deliberately absent.
+//
+// It is an internal OMNIEL system, not a public product. It previously had a
+// full public page here — role, summary and four capabilities — which
+// contradicted its private status. Everything public-facing derives from this
+// array (pages, sitemap, nav, JSON-LD, and the Vapi product tools), so
+// removing it here removes it everywhere. Do not re-add it without an
+// explicit decision to make ORIN public.
 export const products: Product[] = [
   {
     slug: "nova",
@@ -77,7 +85,7 @@ export const products: Product[] = [
     ],
     notes: [
       "NOVA is in active development. Capabilities are at different stages of maturity and not all of them are production-ready.",
-      "Designed with a target of significantly improving productivity, with an internal goal of roughly 40–60%. This is an internal target, not an independently validated benchmark.",
+      "Designed to reduce the manual work in everyday computing. No performance figure is published: nothing has been independently measured yet, and an unvalidated number would be quoted long after its caveat was lost.",
       "The source repository is private. A development build may be made available to visitors.",
     ],
   },
@@ -178,42 +186,6 @@ export const products: Product[] = [
     capabilities: [],
     notes: [
       "KIWI's public specification is still being established. Details will be published when they are real.",
-    ],
-  },
-  {
-    slug: "orin",
-    name: "ORIN",
-    kind: "Private",
-    role: "Autonomous execution system",
-    statement: "Less a conversation, more a system that gets things done.",
-    summary:
-      "ORIN is OMNIEL's private, autonomous-execution system, built for deeper agency and longer, multi-step work rather than direct, consumer-facing conversation like NOVA or ARVO.",
-    hue: 30,
-    status: "Private",
-    priority: "roadmap",
-    audience: ["Internal use", "Advanced/technical operators"],
-    capabilities: [
-      {
-        title: "Task orchestration",
-        body: "Breaks a task into phases and dispatches parts of it to different specialist components, with review steps between them.",
-      },
-      {
-        title: "Human checkpoints",
-        body: "Includes points where a person confirms or corrects a step before ORIN continues, rather than running end-to-end unsupervised by default.",
-      },
-      {
-        title: "Adaptive workflows",
-        body: "Components of self-improvement are being explored within defined bounds. This is architectural direction, not a claim of open-ended autonomous self-modification.",
-      },
-      {
-        title: "Online/offline routing",
-        body: "Shares the ecosystem's hybrid routing direction between cloud and local intelligence, depending on task and availability.",
-      },
-    ],
-    notes: [
-      "ORIN is private by design. Most of its detail is intentionally not public.",
-      "Autonomy is bounded and supervised. It is not presented as a fully unsupervised agent.",
-      "No downloadable or hosted access exists yet.",
     ],
   },
 ];
@@ -343,7 +315,7 @@ export const teamMembers: TeamMember[] = [
   {
     slug: "samuel-asagwara",
     name: "Samuel Asagwara",
-    role: "Founder & CEO",
+    role: "Founder / AI Engineer",
     tagline: "Building NOVA and architecting the OMNIEL ecosystem.",
     bio: "Samuel founded OMNIEL and drives its technical and product direction. He thinks about the system as a whole rather than one feature at a time, at the intersection of AI, agents, interfaces and product.",
     focus: "NOVA's architecture and development, and the direction of the wider OMNIEL ecosystem.",

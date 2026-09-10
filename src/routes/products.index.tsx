@@ -10,23 +10,17 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 import { products } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/products/")({
-  head: () => ({
-    meta: [
-      { title: "Products: NOVA and the OMNIEL roadmap | OMNIEL" },
-      {
-        name: "description",
-        content:
-          "NOVA is OMNIEL's flagship product, in active development. VYREN, ARVO, KIWI and ORIN are the wider roadmap.",
-      },
-      { property: "og:title", content: "OMNIEL products" },
-      {
-        property: "og:description",
-        content: "NOVA first. The rest of the OMNIEL ecosystem follows.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/products",
+    title: "Products: NOVA and the OMNIEL roadmap | OMNIEL",
+    description: "NOVA is OMNIEL's flagship product, in active development. VYREN, ARVO and KIWI are the wider roadmap.",
+    ogTitle: "OMNIEL products",
+    ogDescription: "NOVA first. The rest of the OMNIEL ecosystem follows.",
+    }),
   component: ProductsIndex,
 });
 

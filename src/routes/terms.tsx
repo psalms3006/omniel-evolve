@@ -1,19 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Section, SectionHeading } from "@/components/site/primitives";
 import { contactEmail } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({
-    meta: [
-      { title: "Terms | OMNIEL" },
-      {
-        name: "description",
-        content: "Terms of use for the OMNIEL website during the pre-launch stage.",
-      },
-      { property: "og:title", content: "Terms | OMNIEL" },
-      { property: "og:description", content: "Terms of use for the OMNIEL website." },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/terms",
+    title: "Terms | OMNIEL",
+    description: "Terms of use for the OMNIEL website during the pre-launch stage.",
+    ogTitle: "Terms | OMNIEL",
+    ogDescription: "Terms of use for the OMNIEL website.",
+    }),
   component: Terms,
 });
 

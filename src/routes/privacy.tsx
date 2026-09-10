@@ -1,20 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, Panel, Section, SectionHeading } from "@/components/site/primitives";
 import { contactEmail } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({
-    meta: [
-      { title: "Privacy | OMNIEL" },
-      {
-        name: "description",
-        content:
-          "How the OMNIEL website handles information while the ecosystem is in development.",
-      },
-      { property: "og:title", content: "Privacy | OMNIEL" },
-      { property: "og:description", content: "Privacy notice for the OMNIEL website." },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/privacy",
+    title: "Privacy | OMNIEL",
+    description: "How the OMNIEL website handles information while the ecosystem is in development.",
+    ogTitle: "Privacy | OMNIEL",
+    ogDescription: "Privacy notice for the OMNIEL website.",
+    }),
   component: Privacy,
 });
 
@@ -40,9 +37,9 @@ function Privacy() {
       <Section id="scope">
         <SectionHeading eyebrow="01" title="Who this applies to" />
         <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
-          This notice covers omniel.com.ng, the public website. It does not cover NOVA, VYREN, ARVO,
-          KIWI or ORIN themselves, which are separate, unlaunched systems with their own data
-          practices to be described when they're publicly available.
+          This notice covers omniel.com.ng, the public website. It does not cover NOVA, VYREN, ARVO
+          or KIWI themselves, which are separate, unlaunched systems with their own data practices
+          to be described when they're publicly available.
         </p>
       </Section>
 

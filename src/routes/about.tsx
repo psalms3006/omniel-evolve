@@ -3,23 +3,17 @@ import { ActionLink, Panel, Reveal, Section, SectionHeading } from "@/components
 import { PageHero } from "@/components/site/primitives";
 import { TeamSection } from "@/components/site/team-section";
 import { location, positioning, principles } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About OMNIEL: An AI ecosystem being built from Nigeria" },
-      {
-        name: "description",
-        content:
-          "OMNIEL is an early-stage AI and technology initiative based in Nigeria, built by a sole founder toward a global frontier AI company.",
-      },
-      { property: "og:title", content: "About OMNIEL" },
-      {
-        property: "og:description",
-        content: "Early-stage, Nigeria-based, and building toward a global frontier AI company.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/about",
+    title: "About OMNIEL: An AI ecosystem being built from Nigeria",
+    description: "OMNIEL is an early-stage AI and technology initiative based in Nigeria, built by a sole founder toward a global frontier AI company.",
+    ogTitle: "About OMNIEL",
+    ogDescription: "Early-stage, Nigeria-based, and building toward a global frontier AI company.",
+    }),
   component: About,
 });
 
@@ -30,7 +24,7 @@ const stages = [
   },
   {
     label: "In development",
-    body: "NOVA, VYREN and ARVO are actively being built. KIWI is an emerging project whose public specification is still being established. ORIN is private, with most detail intentionally not public.",
+    body: "NOVA, VYREN and ARVO are actively being built. KIWI is an emerging project whose public specification is still being established.",
   },
   {
     label: "Planned",

@@ -8,23 +8,17 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 import { futureDirections } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/research")({
-  head: () => ({
-    meta: [
-      { title: "Research and future direction | OMNIEL" },
-      {
-        name: "description",
-        content:
-          "OMNIEL's long-term ambitions: frontier AI, research, robotics, games, enterprise and consumer technology, agents and AI infrastructure.",
-      },
-      { property: "og:title", content: "OMNIEL research and future direction" },
-      {
-        property: "og:description",
-        content: "Long-term ambitions, clearly separated from what exists today.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/research",
+    title: "Research and future direction | OMNIEL",
+    description: "OMNIEL's long-term ambitions: frontier AI, research, robotics, games, enterprise and consumer technology, agents and AI infrastructure.",
+    ogTitle: "OMNIEL research and future direction",
+    ogDescription: "Long-term ambitions, clearly separated from what exists today.",
+    }),
   component: Research,
 });
 
@@ -71,8 +65,9 @@ function Research() {
               OMNIEL would rather be small and accurate than impressive and wrong.
             </p>
             <p>
-              Where internal targets exist (such as NOVA's productivity goal of roughly 40–60%),
-              they are described as targets, never as validated benchmarks.
+              Internal targets are not published as figures. A number travels further than the
+              caveat attached to it, so OMNIEL publishes performance claims only once something has
+              actually been measured.
             </p>
             <div className="pt-2">
               <ActionLink to="/contact" variant="ghost">

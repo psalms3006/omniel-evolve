@@ -2,23 +2,17 @@ import { createFileRoute } from "@tanstack/react-router";
 import { InquiryForm } from "@/components/site/inquiry-form";
 import { Eyebrow, PageHero, Panel, Section } from "@/components/site/primitives";
 import { contactEmail, location, partnershipAreas } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact OMNIEL: Partnership, investment and general enquiries" },
-      {
-        name: "description",
-        content:
-          "Reach OMNIEL about products, partnerships, or supporting what is being built. Based in Nigeria.",
-      },
-      { property: "og:title", content: "Contact OMNIEL" },
-      {
-        property: "og:description",
-        content: "General, partnership and investment enquiries for OMNIEL, based in Nigeria.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/contact",
+    title: "Contact OMNIEL: Partnership, investment and general enquiries",
+    description: "Reach OMNIEL about products, partnerships, or supporting what is being built. Based in Nigeria.",
+    ogTitle: "Contact OMNIEL",
+    ogDescription: "General, partnership and investment enquiries for OMNIEL, based in Nigeria.",
+    }),
   component: Contact,
 });
 
@@ -55,7 +49,7 @@ function Contact() {
           <InquiryForm
             id="contact"
             title="General enquiry"
-            description="Questions about NOVA, VYREN, ARVO, KIWI, ORIN, or OMNIEL itself."
+            description="Questions about NOVA, VYREN, ARVO, KIWI, or OMNIEL itself."
             submitLabel="Send message"
           />
 

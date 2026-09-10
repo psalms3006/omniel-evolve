@@ -124,7 +124,7 @@ describe("open_product", () => {
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
-      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi", "orin"]);
+      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi"]);
     }
   });
 });
@@ -163,7 +163,7 @@ describe("navigate_to_product_section", () => {
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
-      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi", "orin"]);
+      expect(result.validOptions).toEqual(["nova", "vyren", "arvo", "kiwi"]);
     }
   });
 

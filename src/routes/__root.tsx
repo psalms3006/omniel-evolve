@@ -32,11 +32,11 @@ const ORGANIZATION_SCHEMA = {
   logo: `${siteUrl}/icon-512.png`,
   email: "hello@omniel.com.ng",
   description:
-    "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO, KIWI and ORIN.",
+    "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO and KIWI.",
   founder: {
     "@type": "Person",
     name: "Samuel Asagwara",
-    jobTitle: "Founder & CEO",
+    jobTitle: "Founder / AI Engineer",
   },
 };
 
@@ -62,12 +62,15 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
+  // Narrow once, here, so both the reporter and any future display path get a
+  // real Error rather than an unknown that has been asserted into one.
+  const err = error instanceof Error ? error : new Error(String(error));
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
+    reportLovableError(err, { boundary: "tanstack_root_error_component" });
+  }, [err]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -107,13 +110,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO, KIWI and ORIN.",
+          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria: NOVA, VYREN, ARVO and KIWI.",
       },
       { name: "author", content: "OMNIEL" },
       { property: "og:site_name", content: "OMNIEL" },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: siteUrl },
-      { property: "og:image", content: `${siteUrl}/og-image.png` },
+      // og:type, og:url, og:title, og:description and og:image are set
+      // per-page by pageHead(). Declaring og:url here made every shared link
+      // preview as the homepage, whatever was actually shared.
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -129,7 +132,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-      { rel: "canonical", href: siteUrl },
+      // No canonical here. A canonical in the root is inherited by every
+      // route, which told search engines that every page was a duplicate of
+      // the homepage. Each route now declares its own via pageHead().
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "icon", href: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { rel: "icon", href: "/icon-512.png", sizes: "512x512", type: "image/png" },

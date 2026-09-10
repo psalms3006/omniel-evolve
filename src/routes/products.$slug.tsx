@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect, Link } from "@tanstack/react-router";
 import { NeuralField } from "@/components/site/neural-field";
 import {
   ActionLink,
@@ -10,29 +10,46 @@ import {
   Shell,
 } from "@/components/site/primitives";
 import { productBySlug, products } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/products/$slug")({
   loader: ({ params }) => {
+    // Slugs that were public once and are not any more.
+    //
+    // /products/orin was live long enough to be crawled, so it exists in
+    // search indexes and possibly in links. Letting it 404 wastes that and
+    // shows visitors an error for a page that was deliberately withdrawn; a
+    // permanent redirect to the product index is the honest answer -- the
+    // page is gone, here is where products live -- and it consolidates any
+    // ranking signal instead of discarding it.
+    const RETIRED_SLUGS = new Set(["orin"]);
+    if (RETIRED_SLUGS.has(params.slug)) {
+      throw redirect({ to: "/products", statusCode: 301 });
+    }
+
     const product = productBySlug(params.slug);
     if (!product) throw notFound();
     return { product };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return {
-        meta: [{ title: "Product not found | OMNIEL" }, { name: "robots", content: "noindex" }],
-      };
+      // Deliberately no canonical: a slug that does not resolve must not claim
+      // to be the indexable version of anything.
+      return pageHead({
+        path: "/products",
+        title: "Product not found | OMNIEL",
+        description: "This product page does not exist.",
+        noindex: true,
+      });
     }
     const { product } = loaderData;
     const title = `${product.name}: ${product.role} | OMNIEL`;
-    return {
-      meta: [
-        { title },
-        { name: "description", content: product.summary },
-        { property: "og:title", content: title },
-        { property: "og:description", content: product.summary },
-      ],
-    };
+    return pageHead({
+      path: `/products/${product.slug}`,
+      title,
+      description: product.summary,
+      ...(product.icon ? { image: product.icon } : {}),
+    });
   },
   component: ProductPage,
 });

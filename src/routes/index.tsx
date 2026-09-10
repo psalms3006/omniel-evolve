@@ -10,24 +10,17 @@ import {
   Shell,
 } from "@/components/site/primitives";
 import { positioning, principles, products, technologyDirections } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "OMNIEL: Building intelligence without borders" },
-      {
-        name: "description",
-        content:
-          "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria. NOVA is the flagship product currently in development, with VYREN, ARVO, KIWI and ORIN as the wider roadmap.",
-      },
-      { property: "og:title", content: "OMNIEL: Building intelligence without borders" },
-      {
-        property: "og:description",
-        content:
-          "NOVA is OMNIEL's flagship product, building now. The rest of the ecosystem follows.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/",
+    title: "OMNIEL: Building intelligence without borders",
+    description: "OMNIEL is an early-stage AI and technology ecosystem being built from Nigeria. NOVA is the flagship product currently in development, with VYREN, ARVO and KIWI as the wider roadmap.",
+    ogTitle: "OMNIEL: Building intelligence without borders",
+    ogDescription: "NOVA is OMNIEL's flagship product, building now. The rest of the ecosystem follows.",
+    }),
   component: Home,
 });
 

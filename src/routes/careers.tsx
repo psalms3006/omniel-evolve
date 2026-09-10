@@ -2,23 +2,17 @@ import { createFileRoute } from "@tanstack/react-router";
 import { InquiryForm } from "@/components/site/inquiry-form";
 import { PageHero, Panel, Reveal, Section, SectionHeading } from "@/components/site/primitives";
 import { careerAreas } from "@/lib/omniel";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/careers")({
-  head: () => ({
-    meta: [
-      { title: "Careers: Build OMNIEL from the beginning" },
-      {
-        name: "description",
-        content:
-          "OMNIEL is an early-stage team in Nigeria. There are no formal openings listed yet, but you can register interest across engineering, AI, research, design, product and more.",
-      },
-      { property: "og:title", content: "Careers at OMNIEL" },
-      {
-        property: "og:description",
-        content: "No formal openings listed yet. Register your interest in building OMNIEL.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+    path: "/careers",
+    title: "Careers: Build OMNIEL from the beginning",
+    description: "OMNIEL is an early-stage team in Nigeria. There are no formal openings listed yet, but you can register interest across engineering, AI, research, design, product and more.",
+    ogTitle: "Careers at OMNIEL",
+    ogDescription: "No formal openings listed yet. Register your interest in building OMNIEL.",
+    }),
   component: Careers,
 });
 

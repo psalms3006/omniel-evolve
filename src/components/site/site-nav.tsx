@@ -6,9 +6,36 @@ import omnielMark from "@/assets/omniel-mark.png";
 import omnielWordmark from "@/assets/omniel-wordmark.png";
 import { cn } from "@/lib/utils";
 
+/** Rendered widths at h-7 (28px), from the assets' own aspect ratios:
+ *  mark 241x244 -> 27.7px, wordmark 560x94 -> 166.8px. */
+const MARK_W = 28;
+const WORDMARK_W = 167;
+
+/** Below this the nav links leave no room for a 167px wordmark, so the
+ *  reveal is not attempted. Measured against the widest label set: at 768px
+ *  the five links plus the Contact button already need ~500px of the row. */
+const REVEAL_MIN_WIDTH = 1024;
+
+function useHasRoomToReveal() {
+  const [hasRoom, setHasRoom] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(`(min-width: ${REVEAL_MIN_WIDTH}px)`);
+    const sync = () => setHasRoom(mql.matches);
+    sync();
+    mql.addEventListener("change", sync);
+    return () => mql.removeEventListener("change", sync);
+  }, []);
+  return hasRoom;
+}
+
 function Wordmark() {
-  const [expanded, setExpanded] = useState(true);
+  // Starts collapsed and opens in an effect once there is known to be room.
+  // Starting expanded would force a first paint at full width on viewports
+  // that cannot afford it, which is a layout jump on exactly the narrow
+  // screens least able to absorb one.
+  const [expanded, setExpanded] = useState(false);
   const reduceMotion = useReducedMotion();
+  const hasRoom = useHasRoomToReveal();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearTimer = () => {
@@ -18,13 +45,14 @@ function Wordmark() {
   // Reveal on load, then collapse to just the "O" after a beat — skip the
   // choreography entirely for prefers-reduced-motion.
   useEffect(() => {
-    if (reduceMotion) {
+    if (reduceMotion || !hasRoom) {
       setExpanded(false);
       return;
     }
+    setExpanded(true);
     timerRef.current = setTimeout(() => setExpanded(false), 900);
     return clearTimer;
-  }, [reduceMotion]);
+  }, [reduceMotion, hasRoom]);
 
   useEffect(() => clearTimer, []);
 
@@ -35,12 +63,15 @@ function Wordmark() {
     timerRef.current = setTimeout(() => setExpanded(false), 1500);
   }
 
+  const open = expanded && hasRoom;
+
   return (
     <Link
       to="/"
       aria-label="OMNIEL home"
       className="group relative flex shrink-0 items-center"
       onMouseEnter={() => {
+        if (!hasRoom) return;
         clearTimer();
         setExpanded(true);
       }}
@@ -48,25 +79,61 @@ function Wordmark() {
         clearTimer();
         setExpanded(false);
       }}
+      onFocus={() => {
+        // Keyboard users get the same reveal as pointer users; without this the
+        // wordmark was reachable by Tab but never actually shown.
+        if (!hasRoom) return;
+        clearTimer();
+        setExpanded(true);
+      }}
+      onBlur={() => {
+        clearTimer();
+        setExpanded(false);
+      }}
       onClick={(e) => {
-        if (!expanded && window.matchMedia("(hover: none)").matches) {
+        if (!open && window.matchMedia("(hover: none)").matches) {
           e.preventDefault();
           handleTap();
         }
       }}
     >
-      {/* Fixed-size slot: the icon always renders here so the nav links
-          never shift. The full wordmark sweeps out over the bar on hover. */}
-      <img src={omnielMark} alt="" className="block h-7 w-auto shrink-0" />
+      {/* The wordmark participates in layout instead of floating above it.
+
+          It used to be `absolute … z-10`, so expanding to 167px painted it
+          straight over the nav links — the reported bug. Animating the width
+          of this in-flow wrapper instead means the row reflows: the links are
+          pushed aside and stay clickable, and the sweep itself is unchanged.
+
+          The mark is absolutely positioned *within* this wrapper so the
+          wordmark (which contains its own "O") slides over it exactly as
+          before, rather than sitting beside a second copy of the glyph. */}
       <motion.span
-        aria-hidden
-        className="pointer-events-none absolute left-0 top-1/2 z-10 block h-7 -translate-y-1/2 overflow-hidden"
+        className="relative block h-7 shrink-0 overflow-hidden"
         initial={false}
-        animate={{ width: expanded ? 167 : 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        animate={{ width: open ? WORDMARK_W : MARK_W }}
+        transition={
+          reduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+        }
         style={{ willChange: "width" }}
       >
-        <img src={omnielWordmark} alt="" className="block h-7 w-auto max-w-none" />
+        <img
+          src={omnielMark}
+          alt=""
+          aria-hidden
+          className="absolute left-0 top-0 block h-7 w-auto max-w-none"
+        />
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute left-0 top-0 z-10 block h-7 overflow-hidden"
+          initial={false}
+          animate={{ width: open ? WORDMARK_W : 0 }}
+          transition={
+            reduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+          }
+          style={{ willChange: "width" }}
+        >
+          <img src={omnielWordmark} alt="" className="block h-7 w-auto max-w-none" />
+        </motion.span>
       </motion.span>
       <span className="sr-only">OMNIEL</span>
     </Link>
@@ -129,7 +196,7 @@ export function SiteNav() {
                     transition: { delayChildren: 0.18, staggerChildren: 0.07 },
                   },
                 }}
-                className="hidden items-center gap-1 md:flex"
+                className="hidden shrink-0 items-center gap-1 whitespace-nowrap md:flex"
               >
                 {navigation.map((item) => (
                   <motion.li
