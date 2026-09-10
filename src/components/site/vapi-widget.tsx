@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "@tanstack/react-router";
 import type Vapi from "@vapi-ai/web";
 import { ClientOnly } from "./client-only";
+import { cn } from "@/lib/utils";
 import { createActionDispatcher } from "@/lib/vapi-integration/actions";
 import { attachToolHandlers } from "@/lib/vapi-integration/tool-handlers";
 
@@ -58,7 +59,20 @@ function loadVapiScript(): Promise<void> {
   return scriptLoadPromise;
 }
 
-type CallState = "idle" | "loading" | "connecting" | "active" | "error";
+/* The states the assistant can actually be in, and which the interface has to
+   distinguish. "active" alone was not enough: a visitor could not tell whether
+   OMNIEL was listening to them or talking to them, which is the one thing a
+   voice interface must make obvious. */
+type CallState = "idle" | "loading" | "connecting" | "listening" | "speaking" | "error";
+
+const STATE_LABEL: Record<CallState, string> = {
+  idle: "Talk to OMNIEL",
+  loading: "Starting…",
+  connecting: "Connecting…",
+  listening: "Listening",
+  speaking: "OMNIEL is speaking",
+  error: "Try again",
+};
 
 function VapiWidgetInner() {
   const router = useRouter();
@@ -91,9 +105,12 @@ function VapiWidgetInner() {
     detachRef.current = attachToolHandlers(vapi, createActionDispatcher(router));
     vapi.on("call-start", () => {
       console.log("[VAPI CONNECTED]");
-      setState("active");
+      setState("listening");
     });
     vapi.on("call-end", () => setState("idle"));
+    // Distinguishes "OMNIEL is talking" from "OMNIEL is waiting for you".
+    vapi.on("speech-start", () => setState("speaking"));
+    vapi.on("speech-end", () => setState("listening"));
     vapi.on("call-start-failed", (event: unknown) => {
       console.error("[VAPI ERROR] call-start-failed", event);
       setState("error");
@@ -109,7 +126,7 @@ function VapiWidgetInner() {
   }
 
   async function handleClick() {
-    if (state === "active") {
+    if (isLive) {
       vapiRef.current?.stop();
       setState("idle");
       return;
@@ -128,30 +145,60 @@ function VapiWidgetInner() {
   }
 
   const isBusy = state === "loading" || state === "connecting";
+  const isLive = state === "listening" || state === "speaking";
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+      {/* Announced to screen readers, so a non-sighted visitor knows whether
+          OMNIEL is listening or speaking without watching a dot. */}
+      <p className="sr-only" role="status" aria-live="polite">
+        {STATE_LABEL[state]}
+      </p>
+
       {errorMessage && (
-        <p className="max-w-[220px] rounded-xl bg-background/95 px-3 py-2 text-right text-xs text-muted-foreground shadow">
+        <p className="panel max-w-[15rem] rounded-2xl px-4 py-3 text-right text-xs leading-relaxed text-muted-foreground">
           {errorMessage}
         </p>
       )}
+
+      {isLive && (
+        <p className="panel rounded-full px-4 py-2 text-xs text-muted-foreground">
+          {state === "speaking" ? "OMNIEL is speaking" : "Listening…"}
+        </p>
+      )}
+
       <button
         type="button"
         onClick={handleClick}
         disabled={isBusy}
-        aria-label={state === "active" ? "End call with OMNIEL" : "Talk to OMNIEL"}
-        className="flex h-14 items-center gap-2 rounded-full border border-hairline bg-foreground px-5 text-sm font-medium text-background shadow-lg transition-opacity hover:opacity-90 disabled:opacity-60"
+        aria-label={isLive ? "End the call with OMNIEL" : "Talk to OMNIEL"}
+        className={cn(
+          // Sized for a thumb (44px minimum), and built from OMNIEL's own
+          // tokens rather than a raw Tailwind palette, so it reads as part of
+          // the site instead of a pasted-on third-party widget.
+          "group flex h-14 items-center gap-3 rounded-full px-5 text-sm font-medium",
+          "transition-[transform,background-color,border-color] duration-[var(--motion-base)]",
+          "focus-visible:outline-2 focus-visible:outline-offset-4 disabled:opacity-60",
+          "hover:-translate-y-0.5 active:translate-y-0",
+          isLive
+            ? "border border-hairline bg-surface-strong text-foreground backdrop-blur-xl"
+            : "bg-primary text-primary-foreground",
+        )}
       >
-        <span
-          className={`h-2 w-2 rounded-full ${state === "active" ? "bg-red-500" : "bg-current"}`}
-          aria-hidden
-        />
-        {state === "active"
-          ? "End call"
-          : state === "loading" || state === "connecting"
-            ? "Connecting…"
-            : "Talk to OMNIEL"}
+        <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden>
+          {/* One pulse, only while OMNIEL is actually speaking: motion that
+              reports state rather than decorating. */}
+          {state === "speaking" && (
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--ion)] opacity-70" />
+          )}
+          <span
+            className={cn(
+              "relative inline-flex h-2.5 w-2.5 rounded-full",
+              state === "error" ? "bg-destructive" : isLive ? "bg-[var(--ion)]" : "bg-current",
+            )}
+          />
+        </span>
+        {isLive ? "End call" : STATE_LABEL[state]}
       </button>
     </div>
   );

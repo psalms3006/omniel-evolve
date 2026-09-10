@@ -44,8 +44,8 @@ describe("pageHead canonical", () => {
   });
 
   it("gives every product page a distinct canonical", () => {
-    const urls = products.map(
-      (p) => canonicalOf(pageHead({ path: `/products/${p.slug}`, title: p.name, description: "x" }))!,
+    const urls = products.map((p) =>
+      canonicalOf(pageHead({ path: `/products/${p.slug}`, title: p.name, description: "x" }))!,
     );
     expect(new Set(urls).size).toBe(products.length);
     for (const u of urls) expect(u).not.toBe(siteUrl);

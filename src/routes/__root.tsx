@@ -15,6 +15,7 @@ import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
 import { VapiWidget } from "@/components/site/vapi-widget";
 import { siteUrl } from "@/lib/omniel";
+import { Meridian } from "@/components/site/meridian";
 
 /**
  * Organization structured data. Every field here is either a fact stated
@@ -42,20 +43,54 @@ const ORGANIZATION_SCHEMA = {
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">This page doesn't exist.</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Either the link's wrong, or the page moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
+    <div className="relative flex min-h-screen items-center overflow-hidden">
+      {/* The same meridian as the hero, turned up and centred: the 404 is not
+          an apology page bolted on, it is the site's own visual language at a
+          different scale. */}
+      <Meridian accent animate intensity={0.8} />
+
+      <div className="shell relative">
+        <div className="max-w-2xl">
+          <p className="eyebrow">Error 404</p>
+          <h1 className="text-balance-tight mt-6 text-[clamp(2.6rem,9vw,5.5rem)] leading-[0.98]">
+            Off the map.
+          </h1>
+          <p className="mt-7 max-w-md text-lg leading-relaxed text-muted-foreground">
+            There's nothing at this address. The link may be out of date, or the page may have moved
+            somewhere better.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <Link
+              to="/"
+              className="inline-flex h-12 items-center rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-transform duration-[var(--motion-base)] hover:-translate-y-0.5"
+            >
+              Back to OMNIEL
+            </Link>
+            <Link
+              to="/products"
+              className="inline-flex h-12 items-center rounded-full border border-hairline px-6 text-sm font-medium transition-colors duration-[var(--motion-base)] hover:bg-surface-strong"
+            >
+              See the products
+            </Link>
+          </div>
+
+          <ul className="mt-14 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            {[
+              { to: "/about" as const, label: "About" },
+              { to: "/technology" as const, label: "Technology" },
+              { to: "/research" as const, label: "Research" },
+              { to: "/contact" as const, label: "Contact" },
+            ].map((l) => (
+              <li key={l.to}>
+                <Link
+                  to={l.to}
+                  className="underline-offset-4 transition-colors duration-[var(--motion-fast)] hover:text-foreground hover:underline"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

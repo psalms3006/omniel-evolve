@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero, Section, SectionHeading } from "@/components/site/primitives";
 import { contactEmail } from "@/lib/omniel";
 import { pageHead } from "@/lib/seo";
@@ -6,11 +6,11 @@ import { pageHead } from "@/lib/seo";
 export const Route = createFileRoute("/terms")({
   head: () =>
     pageHead({
-    path: "/terms",
-    title: "Terms | OMNIEL",
-    description: "Terms of use for the OMNIEL website during the pre-launch stage.",
-    ogTitle: "Terms | OMNIEL",
-    ogDescription: "Terms of use for the OMNIEL website.",
+      path: "/terms",
+      title: "Terms | OMNIEL",
+      description: "Terms of use for the OMNIEL website during the pre-launch stage.",
+      ogTitle: "Terms | OMNIEL",
+      ogDescription: "Terms of use for the OMNIEL website.",
     }),
   component: Terms,
 });
@@ -43,8 +43,37 @@ function Terms() {
         </p>
       </Section>
 
+      <Section id="assistant" className="border-t border-hairline">
+        <SectionHeading eyebrow="03" title="The voice assistant" />
+        <div className="max-w-2xl space-y-5 text-base leading-relaxed text-muted-foreground">
+          <p>
+            This site has an optional voice assistant. It answers questions about OMNIEL, moves you
+            around the site, and can help you fill in and send an enquiry form. It only starts when
+            you start it, and it asks your browser for microphone permission first.
+          </p>
+          <p>
+            Its answers are generated. It is given accurate information about OMNIEL and is
+            instructed not to guess, but it can still be wrong or out of date, and nothing it says
+            is a contract, a quote, a commitment, or professional advice. Where it matters, the
+            written pages on this site take precedence over anything the assistant tells you.
+          </p>
+          <p>
+            It will never claim to have sent something it has not sent. If a submission fails it
+            says so. If you want certainty that a message reached us, email {contactEmail} directly.
+          </p>
+          <p>
+            Please don't give it passwords, card details, or anyone else's personal information. See
+            the{" "}
+            <Link to="/privacy" className="text-foreground underline underline-offset-4">
+              privacy notice
+            </Link>{" "}
+            for what happens to your voice.
+          </p>
+        </div>
+      </Section>
+
       <Section id="ownership" className="border-t border-hairline">
-        <SectionHeading eyebrow="03" title="Ownership" />
+        <SectionHeading eyebrow="04" title="Ownership" />
         <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
           The OMNIEL name, product names and site content belong to OMNIEL. Please don't reproduce
           them in a way that implies endorsement or partnership.
@@ -52,7 +81,7 @@ function Terms() {
       </Section>
 
       <Section id="changes" className="border-t border-hairline">
-        <SectionHeading eyebrow="04" title="Changes to these terms" />
+        <SectionHeading eyebrow="05" title="Changes to these terms" />
         <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
           As the site and the products it describes change, these terms will change with them. Last
           updated September 2026.
@@ -60,7 +89,7 @@ function Terms() {
       </Section>
 
       <Section id="contact" className="border-t border-hairline">
-        <SectionHeading eyebrow="05" title="Contact" />
+        <SectionHeading eyebrow="06" title="Contact" />
         <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
           Questions about these terms can be sent to{" "}
           <a

@@ -1,6 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useRef, type ComponentProps, type ComponentType, type ReactNode } from "react";
+import {
+  type ComponentProps,
+  type ComponentType,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "@/lib/utils";
 
 export function Shell({ className, children }: { className?: string; children: ReactNode }) {
@@ -23,11 +30,31 @@ export function Reveal({
   const reduced = useReducedMotion();
   const MotionTag = motion[as] as typeof motion.div;
 
+  // Failsafe: never leave content invisible.
+  //
+  // This holds its children at opacity 0 until IntersectionObserver reports
+  // them in view. If that never fires -- the observer is unavailable, the
+  // element is measured at zero height during a layout pass, the page is
+  // restored mid-scroll, or hydration is delayed -- the content stays
+  // permanently invisible while sitting in the DOM, which is worse than
+  // having no animation at all. Observed twice in review as a blank region
+  // where a whole section should be.
+  //
+  // After a second, reveal regardless. An entrance animation is an
+  // enhancement; the content is the point.
+  const [forceVisible, setForceVisible] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setForceVisible(true), 1000);
+    return () => clearTimeout(t);
+  }, []);
+
+  const shown = inView || forceVisible;
+
   const anim = reduced
     ? {}
     : {
         initial: { opacity: 0, y: 26, filter: "blur(6px)" },
-        animate: inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 26 },
+        animate: shown ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 26 },
         transition: { duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] as const },
       };
 
@@ -56,7 +83,9 @@ export function SectionHeading({
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center")}>
       {eyebrow ? <Eyebrow className="mb-5">{eyebrow}</Eyebrow> : null}
-      <h2 className="text-balance-tight text-3xl leading-[1.08] sm:text-4xl md:text-5xl">{title}</h2>
+      <h2 className="text-balance-tight text-3xl leading-[1.08] sm:text-4xl md:text-5xl">
+        {title}
+      </h2>
       {lede ? (
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
           {lede}
