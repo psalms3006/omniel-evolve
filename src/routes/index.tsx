@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AmbientField, NeuralField } from "@/components/site/neural-field";
+import { Meridian } from "@/components/site/meridian";
 import {
   ActionLink,
   Eyebrow,
@@ -27,10 +27,10 @@ export const Route = createFileRoute("/")({
 function Hero() {
   return (
     <div className="relative flex min-h-[86svh] w-full items-center overflow-hidden pb-24 pt-36 md:pb-28 md:pt-40">
-      <AmbientField />
-      <div className="absolute inset-0">
-        <NeuralField hue={205} />
-      </div>
+      {/* One background treatment, not three. This previously stacked
+          AmbientField, NeuralField and the aurora gradient behind the single
+          paragraph that has to explain the company. */}
+      <Meridian accent animate align="right" intensity={0.55} />
 
       <Shell>
         <div className="relative max-w-3xl">
@@ -65,7 +65,7 @@ function NovaSpotlightSection() {
       <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
         <div className="relative overflow-hidden rounded-[2rem] border border-hairline">
           <div className="h-64 md:h-full md:min-h-[22rem]">
-            <NeuralField hue={nova.hue} intensity={0.9} />
+            <Meridian accent intensity={0.9} />
           </div>
           {nova.icon && (
             <img
@@ -119,7 +119,7 @@ function EcosystemSection() {
             >
               <Panel interactive className="relative h-full overflow-hidden p-0">
                 <div className="relative h-24 overflow-hidden border-b border-hairline">
-                  <NeuralField hue={product.hue} intensity={0.5} core={false} />
+                  <Meridian intensity={0.45} />
                 </div>
                 <div className="p-6">
                   <p className="font-display text-lg tracking-[0.25em]">{product.name}</p>

@@ -285,7 +285,7 @@ export function SiteNav() {
                     key={p.slug}
                     to="/products/$slug"
                     params={{ slug: p.slug }}
-                    className="glass-quiet rounded-2xl p-4"
+                    className="panel rounded-2xl p-4"
                   >
                     <p className="font-display text-lg tracking-[0.2em]">{p.name}</p>
                     <p className="mt-1 text-sm text-muted-foreground">{p.role}</p>

@@ -20,7 +20,6 @@ export type Product = {
   role: string;
   statement: string;
   summary: string;
-  hue: number;
   status: ProductStatus;
   priority: ProductPriority;
   /** Real brand mark, not the shared NeuralField placeholder. Only set once an actual asset exists. */
@@ -47,7 +46,6 @@ export const products: Product[] = [
     statement: "Do more, with less unnecessary manual work.",
     summary:
       "NOVA is OMNIEL's generalist assistant: productivity, general assistance and computer interaction, designed to work online and, where possible, offline.",
-    hue: 205,
     status: "In development",
     priority: "flagship",
     icon: "/nova-mark.png",
@@ -97,7 +95,6 @@ export const products: Product[] = [
     statement: "Built for complexity.",
     summary:
       "VYREN is OMNIEL's specialist system for developers, engineers and technical users working on hard problems: coding, deep technical reasoning, complex research and voice-first technical conversation.",
-    hue: 78,
     status: "In development",
     priority: "roadmap",
     audience: ["Developers", "Engineers", "Technical users", "People facing complex problems"],
@@ -137,7 +134,6 @@ export const products: Product[] = [
     statement: "Intelligence you can talk to.",
     summary:
       "ARVO combines general-purpose and specialist capability with a strong voice-first direction, built around memory, vision and tool use.",
-    hue: 300,
     status: "In development",
     priority: "roadmap",
     audience: ["General users", "Professionals", "Teams", "Hands-busy environments"],
@@ -179,7 +175,6 @@ export const products: Product[] = [
     statement: "Early, and deliberately quiet.",
     summary:
       "KIWI is a newer OMNIEL project. Its detailed public specification is still being established, and we would rather say nothing than say something inaccurate.",
-    hue: 150,
     status: "Emerging project",
     priority: "roadmap",
     audience: ["To be defined"],
@@ -304,7 +299,6 @@ export type TeamMember = {
   focus: string;
   areas: string[];
   relationship: string;
-  hue: number;
   /** Not collected yet. Component renders a placeholder until this is set. */
   photo?: string;
   /** Only genuine, verified public profiles. Never invented. */
@@ -327,7 +321,6 @@ export const teamMembers: TeamMember[] = [
       "System architecture",
     ],
     relationship: "Founder",
-    hue: 205,
   },
   {
     slug: "jerry-enyi",
@@ -338,7 +331,6 @@ export const teamMembers: TeamMember[] = [
     focus: "Security review and risk analysis across OMNIEL's systems.",
     areas: ["Cybersecurity", "Security analysis", "Risk assessment", "Technical review"],
     relationship: "Core team, collaborator",
-    hue: 12,
   },
   {
     slug: "wisdom-ehirim",
@@ -349,7 +341,6 @@ export const teamMembers: TeamMember[] = [
     focus: "Full-stack implementation across OMNIEL's products.",
     areas: ["Full-stack development", "Frontend", "Backend", "Infrastructure"],
     relationship: "Core team",
-    hue: 150,
   },
   {
     slug: "uzomba-chika",
@@ -360,7 +351,6 @@ export const teamMembers: TeamMember[] = [
     focus: "Business development, partnerships and external communication.",
     areas: ["Business development", "Partnerships", "Marketing", "Strategy"],
     relationship: "Core team",
-    hue: 265,
   },
 ];
 

@@ -64,13 +64,13 @@ function NotFoundComponent() {
 
 function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
-  // Narrow once, here, so both the reporter and any future display path get a
-  // real Error rather than an unknown that has been asserted into one.
-  const err = error instanceof Error ? error : new Error(String(error));
   const router = useRouter();
   useEffect(() => {
+    // Narrowed inside the effect: doing it in the render body created a new
+    // Error identity on every render, which would re-fire the report.
+    const err = error instanceof Error ? error : new Error(String(error));
     reportLovableError(err, { boundary: "tanstack_root_error_component" });
-  }, [err]);
+  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { NeuralField } from "@/components/site/neural-field";
+import { Meridian } from "@/components/site/meridian";
 import { Panel, Reveal } from "@/components/site/primitives";
 import { teamMembers, type TeamMember } from "@/lib/omniel";
 
 /**
  * Placeholder for a real profile photo — none have been collected yet.
- * Reuses the same NeuralField visual language as the product cards instead
+ * Reuses the same meridian motif as the product cards instead
  * of a generic avatar icon or stock photo, so it reads as intentional.
  */
 function PersonMark({ member, size = "md" }: { member: TeamMember; size?: "md" | "lg" }) {
@@ -22,7 +22,7 @@ function PersonMark({ member, size = "md" }: { member: TeamMember; size?: "md" |
         <img src={member.photo} alt="" className="h-full w-full object-cover" />
       ) : (
         <>
-          <NeuralField hue={member.hue} intensity={0.6} core={false} />
+          <Meridian intensity={0.4} />
           <span
             aria-hidden
             className="absolute inset-0 flex items-center justify-center font-display text-sm tracking-[0.2em] text-foreground/80"

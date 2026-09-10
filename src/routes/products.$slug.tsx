@@ -1,5 +1,5 @@
 import { createFileRoute, notFound, redirect, Link } from "@tanstack/react-router";
-import { NeuralField } from "@/components/site/neural-field";
+import { Meridian } from "@/components/site/meridian";
 import {
   ActionLink,
   Eyebrow,
@@ -62,7 +62,7 @@ function ProductPage() {
     <>
       <header id={product.slug} className="relative overflow-hidden pb-16 pt-36 md:pb-24 md:pt-48">
         <div className="absolute inset-0 -z-10">
-          <NeuralField hue={product.hue} intensity={0.85} />
+          <Meridian accent={product.priority === "flagship"} intensity={0.8} />
         </div>
         <Shell>
           {product.icon && <img src={product.icon} alt="" className="mb-6 h-12 w-12" />}

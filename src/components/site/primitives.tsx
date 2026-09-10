@@ -126,7 +126,7 @@ export function ActionLink({
     variant === "primary" &&
       "bg-primary px-6 py-3 text-primary-foreground hover:shadow-[0_16px_50px_-18px_var(--ion)] hover:brightness-110",
     variant === "ghost" &&
-      "glass-quiet px-6 py-3 text-foreground hover:border-accent/50 hover:bg-surface-strong",
+      "panel px-6 py-3 text-foreground hover:border-accent/50 hover:bg-surface-strong",
     variant === "quiet" && "text-muted-foreground hover:text-foreground",
     className,
   );
@@ -168,7 +168,6 @@ export function PageHero({
 }) {
   return (
     <header className="relative overflow-hidden pb-16 pt-36 md:pb-24 md:pt-48">
-      <div aria-hidden className="aurora animate-drift pointer-events-none absolute inset-0 -z-10 opacity-70" />
       <Shell>
         <Reveal>
           <Eyebrow>{eyebrow}</Eyebrow>

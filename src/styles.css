@@ -64,9 +64,11 @@
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --animate-drift: drift 26s ease-in-out infinite;
+  /* Nothing loops forever except the hero meridian, which is brand motion
+     (DESIGN.md, "Motion"). `drift` and `sheen` used to run permanently behind
+     content, costing battery and attention in exchange for nothing the
+     visitor could act on. */
   --animate-rise: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-  --animate-sheen: sheen 7s linear infinite;
 }
 
 :root {
@@ -129,6 +131,13 @@
     oklch(1 0 0 / 2%) 45%,
     oklch(1 0 0 / 5%)
   );
+  /* Motion scale. Components reference these rather than inlining their own
+     durations, so the whole site accelerates and decelerates together. */
+  --motion-fast: 150ms;
+  --motion-base: 300ms;
+  --motion-slow: 600ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
   --shadow-float: 0 30px 90px -40px oklch(0 0 0 / 85%);
   --shadow-lift: 0 1px 0 0 oklch(1 0 0 / 8%) inset, 0 20px 60px -35px oklch(0 0 0 / 90%);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -154,16 +163,6 @@
   );
 }
 
-@keyframes drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(2%, -3%, 0) scale(1.06);
-  }
-}
-
 @keyframes rise {
   from {
     opacity: 0;
@@ -175,15 +174,19 @@
   }
 }
 
-@keyframes sheen {
-  0% {
-    background-position: -200% 0;
+@keyframes meridian-turn {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
   }
-  100% {
-    background-position: 200% 0;
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
+/* Translucency is justified only where content actually scrolls behind an
+   element -- in practice, the fixed navigation. Every other former use was
+   texture, and each backdrop-filter forces its own compositing layer. Raised
+   content uses `panel` instead. */
 @utility glass {
   background: var(--gradient-glass);
   border: 1px solid var(--hairline);
@@ -191,10 +194,15 @@
   box-shadow: var(--shadow-lift);
 }
 
-@utility glass-quiet {
+/* Raised content: solid, cheap, and legible over any background. */
+@utility panel {
   background: var(--surface);
   border: 1px solid var(--hairline);
-  backdrop-filter: blur(14px) saturate(130%);
+}
+
+@utility panel-strong {
+  background: var(--surface-strong);
+  border: 1px solid var(--hairline);
 }
 
 @utility aurora {
