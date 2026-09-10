@@ -48,6 +48,7 @@ function ProductPage() {
           <NeuralField hue={product.hue} intensity={0.85} />
         </div>
         <Shell>
+          {product.icon && <img src={product.icon} alt="" className="mb-6 h-12 w-12" />}
           <Eyebrow>
             {product.priority === "flagship" ? "Flagship · " : ""}
             {product.kind} · {product.status}

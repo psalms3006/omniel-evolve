@@ -47,8 +47,15 @@ function ProductsIndex() {
         <Link to="/products/$slug" params={{ slug: "nova" }} className="mt-6 block">
           <Panel interactive className="overflow-hidden p-0">
             <div className="grid gap-0 lg:grid-cols-[1fr_1.2fr]">
-              <div className="h-48 border-b border-hairline lg:h-full lg:border-b-0 lg:border-r">
+              <div className="relative h-48 border-b border-hairline lg:h-full lg:border-b-0 lg:border-r">
                 <NeuralField hue={nova.hue} intensity={0.85} />
+                {nova.icon && (
+                  <img
+                    src={nova.icon}
+                    alt=""
+                    className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2"
+                  />
+                )}
               </div>
               <div className="p-8 md:p-10">
                 <p className="font-display text-3xl tracking-[0.3em]">{nova.name}</p>

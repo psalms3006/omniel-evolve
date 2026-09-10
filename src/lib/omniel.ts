@@ -23,6 +23,8 @@ export type Product = {
   hue: number;
   status: ProductStatus;
   priority: ProductPriority;
+  /** Real brand mark, not the shared NeuralField placeholder. Only set once an actual asset exists. */
+  icon?: string;
   audience: string[];
   capabilities: { title: string; body: string }[];
   notes: string[];
@@ -40,6 +42,7 @@ export const products: Product[] = [
     hue: 205,
     status: "In development",
     priority: "flagship",
+    icon: "/nova-mark.png",
     audience: [
       "Students",
       "General users",
