@@ -74,6 +74,13 @@ function NovaSpotlightSection() {
           <div className="h-64 md:h-full md:min-h-[22rem]">
             <NeuralField hue={nova.hue} intensity={0.9} />
           </div>
+          {nova.icon && (
+            <img
+              src={nova.icon}
+              alt=""
+              className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 md:h-32 md:w-32"
+            />
+          )}
         </div>
         <div>
           <Eyebrow>OMNIEL's flagship · Building now</Eyebrow>
@@ -144,7 +151,7 @@ function BeliefSection() {
         <div>
           <Eyebrow>Why OMNIEL exists</Eyebrow>
           <blockquote className="text-balance-tight mt-6 text-2xl leading-[1.25] sm:text-3xl md:text-4xl">
-            “{positioning.belief}”
+            "{positioning.belief}"
           </blockquote>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground">
             Africa supplies a great deal of what the global economy runs on. OMNIEL is being built
