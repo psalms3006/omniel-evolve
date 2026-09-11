@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Meridian } from "@/components/site/meridian";
+import { Atmosphere } from "@/components/site/atmosphere";
 import { cn } from "@/lib/utils";
 import {
   ActionLink,
@@ -88,7 +88,7 @@ function Hero() {
       {/* One background treatment, not three. This previously stacked
           AmbientField, NeuralField and the aurora gradient behind the single
           paragraph that has to explain the company. */}
-      <Meridian accent animate align="rising" intensity={0.9} />
+      <Atmosphere />
 
       <Shell>
         <div className="relative grid items-center gap-12 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,0.55fr)]">
@@ -135,7 +135,7 @@ function NovaSpotlightSection() {
       <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
         <div className="relative overflow-hidden rounded-[2rem] border border-hairline">
           <div className="h-64 md:h-full md:min-h-[22rem]">
-            <Meridian accent intensity={0.75} />
+            <Atmosphere variant="band" intensity={0.85} />
           </div>
           {nova.icon && (
             <img
@@ -168,40 +168,70 @@ function NovaSpotlightSection() {
   );
 }
 
+/* The ecosystem, as an architecture rather than a card grid.
+ *
+ * This was four identical cards, each with its own meridian thumbnail: the
+ * heading-paragraph-cards rhythm that makes a page read as assembled from a
+ * template, and a motif repeated until it stopped meaning anything.
+ *
+ * Rows instead. An index, the name at display size, what it is, and where it
+ * has actually got to -- read down, they state the shape of the company: one
+ * flagship and three systems behind it, at different stages. The card grid
+ * flattened that into four equal tiles and said the opposite.
+ */
 function EcosystemSection() {
   const rest = products.filter((p) => p.slug !== "nova");
   return (
     <Section id="products" className="border-t border-hairline">
-      <SectionHeading
-        eyebrow="The wider ecosystem"
-        title="What OMNIEL is building next."
-        lede="NOVA is first. These are the other systems in the roadmap, each solving a different class of problem, at earlier stages of development."
-      />
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <Eyebrow>The wider ecosystem</Eyebrow>
+          <h2 className="text-balance-tight mt-6 text-3xl leading-[1.08] md:text-[2.75rem]">
+            What OMNIEL is building next.
+          </h2>
+          <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground">
+            NOVA is first. These are the other systems in the roadmap, each solving a different
+            class of problem, at earlier stages of development.
+          </p>
+        </div>
 
-      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {rest.map((product, i) => (
-          <Reveal key={product.slug} delay={i * 0.06}>
-            <Link
-              to="/products/$slug"
-              params={{ slug: product.slug }}
-              id={product.slug}
-              className="block h-full scroll-mt-28"
-            >
-              <Panel interactive className="relative h-full overflow-hidden p-0">
-                <div className="relative h-24 overflow-hidden border-b border-hairline">
-                  <Meridian intensity={0.5} lit={false} />
-                </div>
-                <div className="p-6">
-                  <p className="font-display text-lg tracking-[0.25em]">{product.name}</p>
-                  <p className="mt-2 text-sm text-muted-foreground">{product.role}</p>
-                  <p className="mt-5 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">
-                    {product.status}
-                  </p>
-                </div>
-              </Panel>
-            </Link>
-          </Reveal>
-        ))}
+        <ul>
+          {rest.map((product, i) => (
+            <li key={product.slug}>
+              <Reveal delay={i * 0.05}>
+                <Link
+                  to="/products/$slug"
+                  params={{ slug: product.slug }}
+                  id={product.slug}
+                  className="group flex scroll-mt-28 items-baseline gap-6 border-t border-hairline py-7 transition-colors duration-[var(--motion-base)] hover:border-[color-mix(in_oklab,var(--ion)_40%,transparent)] sm:gap-10 sm:py-9"
+                >
+                  <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                    {String(i + 2).padStart(2, "0")}
+                  </span>
+
+                  <span className="min-w-0 flex-1">
+                    <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                      <span className="font-display text-2xl tracking-[0.16em] transition-colors duration-[var(--motion-base)] group-hover:text-[var(--ion)] sm:text-3xl">
+                        {product.name}
+                      </span>
+                      <span className="eyebrow">{product.status}</span>
+                    </span>
+                    <span className="mt-2 block max-w-md text-sm leading-relaxed text-muted-foreground">
+                      {product.role}
+                    </span>
+                  </span>
+
+                  <span
+                    aria-hidden
+                    className="shrink-0 text-muted-foreground transition-transform duration-[var(--motion-base)] group-hover:translate-x-1 group-hover:text-foreground"
+                  >
+                    →
+                  </span>
+                </Link>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </div>
     </Section>
   );

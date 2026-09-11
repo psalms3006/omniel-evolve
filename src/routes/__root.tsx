@@ -15,7 +15,7 @@ import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
 import { VapiWidget } from "@/components/site/vapi-widget";
 import { siteUrl } from "@/lib/omniel";
-import { Meridian } from "@/components/site/meridian";
+import { Atmosphere } from "@/components/site/atmosphere";
 
 /**
  * Organization structured data. Every field here is either a fact stated
@@ -47,7 +47,7 @@ function NotFoundComponent() {
       {/* The same meridian as the hero, turned up and centred: the 404 is not
           an apology page bolted on, it is the site's own visual language at a
           different scale. */}
-      <Meridian accent animate intensity={0.9} />
+      <Atmosphere />
 
       <div className="shell relative">
         <div className="max-w-2xl">

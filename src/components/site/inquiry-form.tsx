@@ -19,6 +19,33 @@ type Props = {
 
 type Status = "idle" | "sending" | "sent" | "failed";
 
+/* What to tell someone when a submission does not go through.
+ *
+ * The old behaviour set one generic message and then immediately assigned
+ * window.location.href to a mailto: URL. On a machine with no mail client
+ * configured -- which is most machines now -- that navigates nowhere, so the
+ * visitor was told their email client "should have opened" when nothing had
+ * happened at all. The message was also the same whether the server was
+ * misconfigured, the delivery had failed, or the network had dropped.
+ *
+ * Each case now says what actually happened and offers a way forward. Nothing
+ * navigates on the visitor's behalf; the mail link is a link they can choose.
+ */
+function failureCopy(status: number | null): string {
+  if (status === 503)
+    return "Our enquiry service isn't accepting messages right now. Nothing was sent — please email us directly and we'll pick it up.";
+  if (status === 502)
+    return "We received your message but couldn't deliver it onward. Please try again, or email us directly.";
+  if (status === 429)
+    return "That's a few messages in quick succession. Wait a moment and try again.";
+  if (status === 409) return "That message has already been sent — no need to send it twice.";
+  if (status === 400)
+    return "Something in the form wasn't accepted. Check the details and try again.";
+  if (status === null)
+    return "We couldn't reach the server. Check your connection and try again, or email us directly.";
+  return "That didn't go through. Please try again, or email us directly.";
+}
+
 const field =
   "w-full rounded-2xl border border-hairline bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition-colors focus-visible:border-accent/60";
 
@@ -55,6 +82,13 @@ export function InquiryForm({
 }: Props) {
   const uid = useId();
   const [status, setStatus] = useState<Status>("idle");
+  const [failureStatus, setFailureStatus] = useState<number | null>(null);
+  const [lastDraft, setLastDraft] = useState<{
+    name: string;
+    email: string;
+    category: string;
+    message: string;
+  } | null>(null);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -66,6 +100,7 @@ export function InquiryForm({
     const message = String(data.get("message") ?? "");
 
     setStatus("sending");
+    setLastDraft({ name, email, category, message });
 
     try {
       const res = await fetch("/api/enquiry", {
@@ -76,15 +111,19 @@ export function InquiryForm({
       });
       if (res.ok) {
         setStatus("sent");
+        setFailureStatus(null);
         form.reset();
         return;
       }
+      setFailureStatus(res.status);
     } catch {
-      // fall through to mailto fallback below
+      // Network-level failure: no response at all, so there is no status code.
+      setFailureStatus(null);
     }
 
+    // Deliberately no navigation here. The form keeps what was typed, and the
+    // visitor chooses whether to retry or to mail us.
     setStatus("failed");
-    window.location.href = buildMailto(title, category, name, email, message);
   }
 
   return (
@@ -155,21 +194,52 @@ export function InquiryForm({
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
-          <button
-            type="submit"
-            disabled={status === "sending"}
-            className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-all duration-500 hover:brightness-110 disabled:opacity-60"
+        <div className="grid gap-4 sm:col-span-2">
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-all duration-[var(--motion-base)] hover:brightness-110 disabled:opacity-60"
+            >
+              {status === "sending" ? "Sending…" : status === "failed" ? "Try again" : submitLabel}
+            </button>
+
+            {status === "failed" && lastDraft ? (
+              <a
+                href={buildMailto(
+                  title,
+                  lastDraft.category,
+                  lastDraft.name,
+                  lastDraft.email,
+                  lastDraft.message,
+                )}
+                className="rounded-full border border-hairline px-6 py-3 text-sm font-medium transition-colors duration-[var(--motion-base)] hover:bg-surface-strong"
+              >
+                Email OMNIEL directly
+              </a>
+            ) : null}
+          </div>
+
+          <p
+            className={cn(
+              "text-xs leading-relaxed",
+              status === "failed" ? "text-foreground" : "text-muted-foreground",
+            )}
+            aria-live="polite"
           >
-            {status === "sending" ? "Sending…" : submitLabel}
-          </button>
-          <p className="text-xs text-muted-foreground" aria-live="polite">
             {status === "sent" && "Sent. Thank you, we'll be in touch."}
             {status === "sending" && "Sending…"}
-            {status === "failed" &&
-              `Automatic sending failed. Your email client should have opened as a fallback. If not, write to ${contactEmail}.`}
+            {status === "failed" && (
+              <>
+                {failureCopy(failureStatus)}{" "}
+                <a href={`mailto:${contactEmail}`} className="underline underline-offset-4">
+                  {contactEmail}
+                </a>
+                . Your message is still in the form above.
+              </>
+            )}
             {status === "idle" &&
-              "Submissions go straight to OMNIEL, with your email client as a fallback if that fails."}
+              "Submissions go straight to OMNIEL. Nothing you type here is stored anywhere else."}
           </p>
         </div>
       </form>

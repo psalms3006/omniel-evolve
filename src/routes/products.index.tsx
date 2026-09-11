@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Meridian } from "@/components/site/meridian";
+import { Atmosphere } from "@/components/site/atmosphere";
 import {
   ActionLink,
   Eyebrow,
@@ -42,7 +42,7 @@ function ProductsIndex() {
           <Panel interactive className="overflow-hidden p-0">
             <div className="grid gap-0 lg:grid-cols-[1fr_1.2fr]">
               <div className="relative h-48 border-b border-hairline lg:h-full lg:border-b-0 lg:border-r">
-                <Meridian accent intensity={0.75} />
+                <Atmosphere variant="band" intensity={0.9} />
                 {nova.icon && (
                   <img
                     src={nova.icon}
@@ -81,7 +81,7 @@ function ProductsIndex() {
               >
                 <Panel interactive className="h-full overflow-hidden p-0">
                   <div className="relative h-28 border-b border-hairline">
-                    <Meridian intensity={0.5} lit={false} />
+                    <Atmosphere variant="band" intensity={0.6} />
                   </div>
                   <div className="p-6">
                     <div className="flex flex-wrap items-center gap-3">

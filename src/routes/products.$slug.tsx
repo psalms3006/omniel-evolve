@@ -1,5 +1,5 @@
 import { createFileRoute, notFound, redirect, Link } from "@tanstack/react-router";
-import { Meridian } from "@/components/site/meridian";
+import { Atmosphere } from "@/components/site/atmosphere";
 import {
   ActionLink,
   Eyebrow,
@@ -62,7 +62,7 @@ function ProductPage() {
     <>
       <header id={product.slug} className="relative overflow-hidden pb-16 pt-36 md:pb-24 md:pt-48">
         <div className="absolute inset-0 -z-10">
-          <Meridian accent={product.priority === "flagship"} intensity={0.8} />
+          <Atmosphere variant="band" intensity={product.priority === "flagship" ? 0.95 : 0.7} />
         </div>
         <Shell>
           {product.icon && <img src={product.icon} alt="" className="mb-6 h-12 w-12" />}

@@ -94,6 +94,26 @@
   --input: oklch(1 0 0 / 14%);
   --ring: oklch(0.78 0.09 215 / 60%);
 
+  /* The OMNIEL environment.
+     ------------------------------------------------------------------
+     Not a landscape and not a lavender dusk -- both of those belonged to the
+     reference material, not to this company. This is OMNIEL's own near-black,
+     opened up into depth: the base colour at altitude, lifting very slightly
+     toward the horizon, with a single restrained `ion` light low in the frame.
+
+     One accent, one light source, no second hue. The depth comes from value
+     and scale rather than from colour, which is what keeps it quiet enough to
+     sit behind body copy on every page of the site. */
+  --env-high: oklch(0.145 0.012 260);
+  --env-mid: oklch(0.175 0.015 253);
+  --env-low: oklch(0.215 0.021 243);
+  --env-horizon: oklch(0.27 0.032 232);
+  --env-glow: oklch(0.72 0.075 210 / 20%);
+  --ridge-far: oklch(0.23 0.022 243);
+  --ridge-mid: oklch(0.185 0.017 250);
+  --ridge-near: oklch(0.155 0.013 257);
+  --haze: oklch(0.5 0.04 225 / 14%);
+
   --surface: oklch(1 0 0 / 4%);
   --surface-strong: oklch(1 0 0 / 8%);
   --hairline: oklch(1 0 0 / 12%);
@@ -174,12 +194,17 @@
   }
 }
 
-@keyframes meridian-turn {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
+/* The only ambient loop on the site: the ground haze, slow enough to read as
+   air moving rather than as an animation. */
+@keyframes haze-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.9;
   }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
+  50% {
+    transform: translate3d(-2%, -1.5%, 0);
+    opacity: 1;
   }
 }
 

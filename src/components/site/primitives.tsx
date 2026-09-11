@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Atmosphere } from "./atmosphere";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import {
   type ComponentProps,
@@ -197,7 +198,15 @@ export function PageHero({
 }) {
   return (
     <header className="relative overflow-hidden pb-16 pt-36 md:pb-24 md:pt-48">
-      <Shell>
+      {/* Every page opens in the same environment.
+          A design language that stops at the landing page is not a design
+          language -- it is a landing page. This is the one component every
+          inner route already renders its title through, so putting the
+          environment here is what makes About, Technology, Research, Careers,
+          Contact, Privacy and Terms belong to the same site as the homepage,
+          without touching any of them. */}
+      <Atmosphere variant="band" intensity={0.7} />
+      <Shell className="relative">
         <Reveal>
           <Eyebrow>{eyebrow}</Eyebrow>
           <h1 className="text-balance-tight mt-6 max-w-4xl text-4xl leading-[1.04] sm:text-5xl md:text-7xl">

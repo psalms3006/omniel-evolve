@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Meridian } from "@/components/site/meridian";
+import { Atmosphere } from "@/components/site/atmosphere";
 import { Panel, Reveal } from "@/components/site/primitives";
 import { teamMembers, type TeamMember } from "@/lib/omniel";
 
@@ -22,7 +22,7 @@ function PersonMark({ member, size = "md" }: { member: TeamMember; size?: "md" |
         <img src={member.photo} alt="" className="h-full w-full object-cover" />
       ) : (
         <>
-          <Meridian intensity={0.45} lit={false} />
+          <Atmosphere variant="band" intensity={0.55} />
           <span
             aria-hidden
             className="absolute inset-0 flex items-center justify-center font-display text-sm tracking-[0.2em] text-foreground/80"
